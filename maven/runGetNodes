@@ -1,0 +1,5 @@
+#!/bin/bash
+libdir="/home/vicdecode/.m2/repository/org/apache/jackrabbit"
+classpath=".:$libdir/jackrabbit-standalone/2.20.3/*:$libdir/jackrabbit-jcr2dav/2.9.0/*"
+java -cp $classpath  GetNodes
+
