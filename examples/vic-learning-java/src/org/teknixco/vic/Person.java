@@ -1,4 +1,4 @@
-package vic;
+package org.teknixco.vic;
 
 public class Person {
 	public int id = 7;

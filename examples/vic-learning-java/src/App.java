@@ -1,4 +1,4 @@
-import vic.Engineer;
+import org.teknixco.vic.Engineer;
 
 public class App {
 	public static void main(String[] args) {
