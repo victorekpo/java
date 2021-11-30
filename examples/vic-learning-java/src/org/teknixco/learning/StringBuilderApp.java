@@ -1,4 +1,5 @@
 package org.teknixco.learning;
+
 public class StringBuilderApp {
         public static void main(String[] args) {
                 // Inefficient every time you create a string, it does not get replaced but a new string is created when you add to it, this can lead to memory issues.
