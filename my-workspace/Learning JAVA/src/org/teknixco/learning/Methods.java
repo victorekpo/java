@@ -5,9 +5,10 @@ class PersonWithMethods {
 	String name;
 	int age;
 
-	void speak() { // methods should always start with a lowercase letter, or use camelCase.
-					// Constructor methods use the same name as the class.
-		System.out.println();
+	// methods should always start with a lowercase letter, or use camelCase.
+	// Constructor methods use the same name as the class.
+	void speak() {
+		System.out.println("Hello, my name is " +name+ ", I am " + age + " years old.");
 	}
 
 	// Notes: Class name must match file name.
@@ -26,8 +27,10 @@ public class Methods {
 		person1.age = 34;
 		PersonWithMethods person2 = new PersonWithMethods(); // the keyword "new" sets the type "Person" for person2 to
 																// a new Person object.
-		person2.name = "you";
+		person2.name = "Someone Special";
 		person2.age = 25;
+		person1.speak();
+		person2.speak();
 	}
 
 }
