@@ -27,6 +27,7 @@ class Thing {
 
 public class StaticVariablesMethods {
 	public static void main(String[] args) {
+		System.out.println("Before objects are created, count is: " + Thing.count);
 		Thing thing1 = new Thing();
 		Thing thing2 = new Thing();
 
