@@ -1,9 +1,14 @@
 package org.teknixco.learning;
 
-class Person {
+class PersonWithMethods {
 	// Instance variables (data or "state")
 	String name;
 	int age;
+
+	void speak() { // methods should always start with a lowercase letter, or use camelCase.
+					// Constructor methods use the same name as the class.
+		System.out.println();
+	}
 
 	// Notes: Class name must match file name.
 	// A class is a template for creating an object. It doesn't represent an actual
@@ -14,12 +19,13 @@ class Person {
 	// 2. Subroutines, which are methods, are commands that are executed
 }
 
-public class Classes {
+public class Methods {
 	public static void main(String[] args) {
-		Person person1 = new Person(); // creating an object of type "Person", instantiation
+		PersonWithMethods person1 = new PersonWithMethods(); // creating an object of type "Person", instantiation
 		person1.name = "Victor E.";
 		person1.age = 34;
-		Person person2 = new Person(); // the keyword "new" sets the type "Person" for person2 to a new Person object.
+		PersonWithMethods person2 = new PersonWithMethods(); // the keyword "new" sets the type "Person" for person2 to
+																// a new Person object.
 		person2.name = "you";
 		person2.age = 25;
 	}

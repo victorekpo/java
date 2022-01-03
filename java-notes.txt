@@ -2,3 +2,5 @@ In Eclipse you can type main (after declaring a class) and press Ctrl+ Spacebar 
 Also you can easily type sysout + Ctrl + Spacebar to get your System.out.println();
 
 Ctrl+Shift+O will import all necessary packages for your class
+
+Ctrl+Shift+F and Eclipse will automatically format correctly for you.
