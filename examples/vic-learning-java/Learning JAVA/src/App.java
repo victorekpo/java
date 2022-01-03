@@ -1,5 +1,5 @@
 import org.teknixco.vic.Engineer;
-import org.teknixco.vic.Person;
+import org.teknixco.vic.Person; //just because the previous class extends Person doesn't mean this class can access it.
 
 public class App {
 	public static void main(String[] args) {
