@@ -7,7 +7,7 @@ public class Strings {
 		int myInt = 7;
 		String text = "Hello baby";
 		String blank = " ";
-		String name = "IA";
+		String name = "Mmi";
 		String greeting = text + blank + name;
 		System.out.println(greeting + blank + myInt);
 	}
