@@ -17,5 +17,12 @@ public class ArraysofStrings {
 		
 		// int value = 0; // allocates enough memory to hold an integer, can only hold an integer, default value is 0 if not declared, primitive type because of lower-case letter
 		// String text = null; // non primitive type because of capital letter, String is a class, does not allocate memory for the string but allocates memory for the reference to a string (address of some memory), default value for references is null.
+		
+		String[] texts = new String[2]; //reference that points to references, only allocating enough memory for 2 references for strings.
+		texts[0] = "one"; // allocating memory now for the string, pointing the reference to that memory.
+		texts[1] = "two";
+		for(String text: texts) {
+			System.out.println(text);
+		}
 	}
 }
