@@ -27,9 +27,9 @@ public class GetNodes {
 			Node root = session.getRootNode();
 
 			// Store content
-//  Node adobe = root.addNode("adobe"); 
-//  Node day = adobe.addNode("day"); 
-//  day.setProperty("message", "Adobe CQ is part of the Adobe Digital Marketing Suite!");
+			//  Node adobe = root.addNode("adobe"); 
+			//  Node day = adobe.addNode("day"); 
+			//  day.setProperty("message", "Adobe CQ is part of the Adobe Digital Marketing Suite!");
 
 			// Retrieve content
 			Node node = root.getNode("content/we-retail/us/en/experience/jcr:content");
