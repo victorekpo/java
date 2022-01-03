@@ -1,0 +1,4 @@
+In Eclipse you can type main (after declaring a class) and press Ctrl+ Spacebar to automatically create your main method within your class.
+Also you can easily type sysout + Ctrl + Spacebar to get your System.out.println();
+
+Ctrl+Shift+O will import all necessary packages for your class
