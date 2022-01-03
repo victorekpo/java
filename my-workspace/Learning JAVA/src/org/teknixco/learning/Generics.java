@@ -1,13 +1,14 @@
 package org.teknixco.learning;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
+//import java.util.Iterator;
+//import java.util.Map;
 import java.util.HashMap;
 
 public class Generics {
 	public static void main(String[] args) {
 		
+		/*
 		/// OLD STYLE ///
 		ArrayList list = new ArrayList();
 		
@@ -22,7 +23,7 @@ public class Generics {
 			System.out.println(itr.next());
 		}
 		
-		
+		*/
 		// NEW STYLE //
 		ArrayList<String> strings = new ArrayList<>(); //optional to add type for the new initialization
 		strings.add("cat");

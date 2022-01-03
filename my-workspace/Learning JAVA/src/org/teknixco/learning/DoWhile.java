@@ -1,10 +1,12 @@
 package org.teknixco.learning;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class DoWhile {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		Scanner input = new Scanner(System.in);
-		
+		try {
+					
 		/*Example 1: Using a While Loop, Not Efficient because of repetition
 		System.out.println("Enter a number: ");
 		int value = input.nextInt();
@@ -24,8 +26,10 @@ public class DoWhile {
 		while(value != 5);
 		// The code loops and doesn't reach the next line until the while loop is broken. 
 		System.out.println("Got 5!");
-		
-		
+		}		
+		finally {
+			input.close();
+		}
 		
 		
 	}

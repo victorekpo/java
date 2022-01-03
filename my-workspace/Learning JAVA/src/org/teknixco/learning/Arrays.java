@@ -2,7 +2,7 @@ package org.teknixco.learning;
 
 public class Arrays {
 	public static void main(String[] args) {
-		int value = 7; // create enough memory (32 bits) to hold an integer, value type, value variable
+		//int value = 7; // create enough memory (32 bits) to hold an integer, value type, value variable
 		int[] values; // holds multiple values or list of integers, int[] is a label, reference variable
 		values = new int[3]; // points the reference to a new Array object with 3 members
 		values[0] = 10; // if not explicitly defined, Java will give a default value of 0, unlike C++.

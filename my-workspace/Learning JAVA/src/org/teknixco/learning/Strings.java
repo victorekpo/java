@@ -9,6 +9,6 @@ public class Strings {
 		String blank = " ";
 		String name = "IA";
 		String greeting = text + blank + name;
-		System.out.println(greeting);
+		System.out.println(greeting + blank + myInt);
 	}
 }

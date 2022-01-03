@@ -2,16 +2,16 @@ package org.teknixco.learning;
 
 public class IfStatements {
 	public static void main(String[] args) {
-		boolean cond = 5 != 5; // false
-		boolean cond2 = 4 == 3; // are they the same value? // fale
-		boolean cond3 = 4 == 4; // true
+		// boolean cond = 5 != 5; // false
+		// boolean cond2 = 4 == 3; // are they the same value? // fale
+		// boolean cond3 = 4 == 4; // true
 		
 		int myInt = 50;
 		
 		String trueStatement = "Yes it's true!";
 		String falseStatement = "No, it's false!";
 		
-		if(4 == 4) {
+		if(myInt == 4) {
 			System.out.println(trueStatement);
 		}
 		
