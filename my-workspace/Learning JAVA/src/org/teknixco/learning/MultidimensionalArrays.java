@@ -21,5 +21,10 @@ public class MultidimensionalArrays {
 				System.out.println(item);
 			}
 		}
+		
+		String[][] words = new String[2][]; // if you don't explicitly set each dimension, you will have to do so later
+		words[0] = new String[3];
+		words[0][1] = "Hi there";
+		System.out.println(words[0][1]);
 	}
 }
