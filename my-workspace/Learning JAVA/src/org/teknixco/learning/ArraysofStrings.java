@@ -9,10 +9,10 @@ public class ArraysofStrings {
 		words[2] = "mmi";
 		System.out.println(words[0] + words[1] + words[2]);
 		
-		String[] greeting = {"Hello", "my", "darling"};
+		String[] greeting = {"Hello ", "my ", "darling \n"};
 		
 		for(String word: greeting) { // easy way to use a for loop for each element, for greet in greeting. 
-			System.out.println(word);
+			System.out.print(word);
 		}
 		
 		// int value = 0; // allocates enough memory to hold an integer, can only hold an integer, default value is 0 if not declared, primitive type because of lower-case letter
