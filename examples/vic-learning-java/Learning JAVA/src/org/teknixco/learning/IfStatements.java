@@ -15,7 +15,7 @@ public class IfStatements {
 			System.out.println(trueStatement);
 		}
 		
-		
+		// Example 1
 		if(myInt < 30) {
 			System.out.println(trueStatement);
 		}
@@ -26,6 +26,7 @@ public class IfStatements {
 			System.out.println(falseStatement);
 		}
 		
+		//Example 2
 		int loop = 0;
 		
 		while(true) { //infinite loop created
