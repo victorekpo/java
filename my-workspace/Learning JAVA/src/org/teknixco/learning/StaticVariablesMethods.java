@@ -10,14 +10,16 @@ class Thing {
 	public String name;
 	public static String description;
 	public static final int LUCKY_NUMBER = 7; // class constant
-	public static int count = 0;
+	public static int count;
+	public int id; // will keep a record of the current count for that object, since its non-static it belongs to the object instance.
 
 	public Thing() {
 		count++; // constructor increments count every time an instance is created.
+		id = count;
 	}
 
 	public void getName() {
-		System.out.println(description + ": " + name);
+		System.out.println("Object id is " + this.id + ". " + description + ": " + name);
 	}
 
 	public static void showInfo() {
