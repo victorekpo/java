@@ -25,5 +25,18 @@ public class IfStatements {
 		else { // only use else, if you have binary conditions, that is only 2 possibilities, otherwise use else if, switch statements, objects, etc. Else can also be considered the final check (or everything else).
 			System.out.println(falseStatement);
 		}
+		
+		int loop = 0;
+		
+		while(true) { //infinite loop created
+			System.out.println("Looping: " + loop);
+			
+			if(loop == 5) {
+				break; // break statement jumps out of the loop
+			}
+			
+			loop++; //loop is incremented
+		}
+		
 	}
 }
