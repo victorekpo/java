@@ -7,30 +7,34 @@ package org.teknixco.learning;
 class Thing {
 	public String name;
 	public static String description;
-	
+	public static final int LUCKY_NUMBER = 7; // class constant
+
 	public void getName() {
 		System.out.println(description + ": " + name);
 	}
-	
+
 	public static void showInfo() {
 		System.out.println("Hello");
 	}
-	
+
 }
 
 public class StaticVariablesMethods {
 	public static void main(String[] args) {
 		Thing thing1 = new Thing();
 		Thing thing2 = new Thing();
-		
+
 		Thing.description = "I am a thing";
 		Thing.showInfo();
 		System.out.println(Thing.description);
-		
+
 		thing1.name = "Bob";
 		thing2.name = "Sue";
 		thing1.getName();
 		thing2.getName();
-				
+		
+		System.out.println(Math.PI); //  an example of a static constant
+		System.out.println(Thing.LUCKY_NUMBER);
+
 	}
 }
