@@ -12,10 +12,13 @@ public class StringBuilderApp {
 		System.out.println(info);
 
 		// More efficient.
-		StringBuilder sb = new StringBuilder(); // StringBuffer (for multiple threads)
-		sb.append("My name is Vic.");
-		sb.append(" ");
-		sb.append("I am a software engineer.");
+		StringBuilder sb = new StringBuilder(); // use StringBuffer for multiple threads.
+												// StringBuilder is more light-weight.
+
+		sb.append("My name is Vic.")
+				.append(" ") // chaining methods
+				.append("I am a software engineer.");
+
 		System.out.println(sb.toString());
 
 	}
