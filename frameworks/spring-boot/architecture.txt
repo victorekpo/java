@@ -1,0 +1,35 @@
+What is Spring?
+-Spring provides a bootstrap infrastructure for developing Java applications. It comes with:
+  -Spring JDBC
+  -Spring MVC
+  -Spring Security
+  -Spring AOP
+  -Spring ORM
+  -Spring Test
+-Maven dependencies:
+<dependency>
+  <groupId>org.springframework</groupId>
+  <artifactId>spring-web</artifactId>
+  <version>5.3.5</version>
+</dependency>
+<dependency>
+  <groupId>org.springframework</groupId>
+  <artifactId>spring-webmvc</artifactId>
+  <version>5.3.5</version>
+</dependency>
+
+What is Spring Boot?
+-Spring Boot is an extension of the Spring framework, eliminates a lot of boilerplate configurations required for setting up a Spring application.
+-Features include:
+ -opinionated 'starter' dependencies to simplify the build and application configuration
+ -embedded server to avoid complexity in app deployment
+ -metrics, health check, and externalized configuration
+ -automatic config for Spring functionality - where possible
+-Maven dependency:
+<dependency>
+
+</dependency>
+
+Testing Libraries
+Spring Boot Architecture
+
