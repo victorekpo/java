@@ -4,6 +4,7 @@ package com.victor.student;
 import javax.persistence.*;
 import java.time.LocalDate;
 
+//This is a Model, the Student model.
 @Entity
 @Table(name = "students", schema = "public")
 public class Student {

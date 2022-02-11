@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
 
+//The Components / Service Layers have all the business logic, getting, setting, conditionals, etc.
 @Service
 public class StudentService {
     public List<Student> getStudents() {
