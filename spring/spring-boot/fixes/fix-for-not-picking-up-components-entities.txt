@@ -1,0 +1,17 @@
+SpringBoot if it is not picking up Controllers or Entities
+https://stackoverflow.com/questions/55750957/why-is-this-componentscan-not-working-in-my-spring-boot-application
+
+Spring Boot relies heavily on default configuration. Consider this excerpt from @EnableAutoConfiguration annotation.
+
+The package of the class that is annotated with @EnableAutoConfiguration, usually via @SpringBootApplication, has specific significance and is often used as a 'default'. For example, it will be used when scanning for @Entity classes. It is generally recommended that you place @EnableAutoConfiguration (if you're not using @SpringBootApplication) in a root package so that all sub-packages and classes can be searched.
+
+The same logic implies to @ComponentScan, @EnableJpaRepositories and the above mentioned @EntityScan annotations. So, if you want to take control of component scanning, you should specify base packages explicitly for all of those annotations.
+
+@SpringBootApplication(scanBasePackages = "com.test")
+@EnableJpaRepositories(basePackages = "com.test")
+@EntityScan(basePackages = "com.test")
+public class Application {
+  public static void main(String[] args) {
+    SpringApplication.run(Application.class, args);
+  }
+}
