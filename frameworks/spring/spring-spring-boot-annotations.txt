@@ -205,4 +205,71 @@ The @ConditionalOnClass and @ConditionalOnMissingClass annotations let configura
 @Conditional
 @Conditional is used in complex conditions, we can create a class evaluating the custom condition.
 
+@Transactional
 https://dzone.com/articles/how-does-spring-transactional
+
+More information on Spring Annotations, Custom Annotations, Stereotyped Annotations (for Beans), & More
+https://dzone.com/refcardz/spring-annotations
+
+Core Spring Annotations
+ANNOTATION	USE	DESCRIPTION
+@Autowired	Constructor, Field, Method		Declares a constructor, field, setter method, or configuration method to be autowired by type. Items annotated with @Autowired do not have to be public.
+@Configurable	Type					Used with <context:springconfigured> to declare types whose properties should be injected, even if they are not instantiated by Spring. Typically used to inject the properties of domain objects.
+@Order		Type, Method, Field			Defines ordering, as an alternative to implementing the org. springframework.core.Ordered interface.
+@Qualifier	Field, Parameter, Type, Annotation Type	Guides autowiring to be performed by means other than by type.
+@Required	Method (setters)			Specifies that a particular property must be injected or else the configuration will fail.
+@Scope		Type					Specifies the scope of a bean, either singleton, prototype, request, session, or some custom scope.
+
+Stereotyping Annotations
+ANNOTATION	USE	DESCRIPTION
+@Component	Type	Generic stereotype annotation for any Spring-managed component.
+@Controller	Type	Stereotypes a component as a Spring MVC controller.
+@Repository	Type	Stereotypes a component as a repository. Also indicates that SQLExceptions thrown from the component's methods should be translated into Spring DataAccessExceptions.
+@Service	Type	Stereotypes a component as a service.
+
+Spring MVC Annotations
+@Controller		Type			Stereotypes a component as a Spring MVC controller.
+@InitBinder		Method			Annotates a method that customizes data binding.
+@ModelAttribute		Parameter, Method	When applied to a method, used to preload the model with the value returned from the method. When applied to a parameter, binds a model attribute to the parameter. table
+@RequestMapping		Method, Type		Maps a URL pattern and/or HTTP method to a method or controller type.
+@RequestParam		Parameter		Binds a request parameter to a method parameter.
+@SessionAttributes	Type			Specifies that a model attribute should be stored in the session.
+
+Simple MVC Controller
+@Controller
+@RequestMapping("/home.htm")
+public class HomePage {
+@RequestMapping(method = RequestMethod.GET)
+public String showHomePage(Map model) {
+List<Pirate> pirates = pirateService.
+getPirateList();
+model.add("pirateList", pirates);
+return "home";
+}
+@Autowired
+PirateService pirateService;
+}
+
+Form-Handling Controller
+@Controller
+@RequestMapping("/addPirate.htm")
+public class AddPirateFormController {
+@RequestMapping(method = RequestMethod.GET)
+public String setupForm(ModelMap model) {
+return "addPirate";
+}
+@ModelAttribute("pirate")
+public Pirate setupPirate() {
+Pirate pirate = new Pirate();
+return pirate;
+}
+@RequestMapping(method = RequestMethod.POST)
+protected String addPirate(@ModelAttribute("pirate")
+Pirate pirate) {
+pirateService.addPirate(pirate);
+return "pirateAdded";
+}
+@Autowired
+PirateService pirateService;
+}
+
