@@ -15,7 +15,7 @@ public class StudentService {
     private final StudentRepository studentRepository;
 
     @Autowired
-    public StudentService(StudentRepository studentRepository) {
+    public StudentService   (StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
 
@@ -59,10 +59,11 @@ public class StudentService {
             !Objects.equals(student.getEmail(), email)) {
             Optional<Student> studentOptional = studentRepository
                 .findStudentByEmail(email);
+                student.setEmail(email);
             if (studentOptional.isPresent()) {
                 throw new IllegalStateException("email taken");
             }
-        student.setEmail(email);
+
         }
 
     }
