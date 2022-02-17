@@ -273,3 +273,8 @@ return "pirateAdded";
 PirateService pirateService;
 }
 
+
+JpaRepository is a combination of CrudRepository and PagingAngeSortingRepository All take <T, ID> 
+
+For each table you will have one entity class.
+For each entity class you will have one repository.
