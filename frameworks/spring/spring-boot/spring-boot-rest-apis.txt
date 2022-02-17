@@ -1,0 +1,46 @@
+Spring Boot & REST APIs
+
+REST = Representational State Transfer
+
+SOAP vs REST
+SOAP - has only XML data format but REST has XML or JSON
+REST is easier to implement/consume than SOAP
+
+JSON
+-Key-value pair similar to Map that we have in Java, only difference is Java has values of different data types but JSON has Array, String,Integer,Double as value data type.
+
+What is Spring Boot?
+-based on Spring Framework
+-Requires less configuration.
+
+-Properties file key/value pair
+-key=value syntax
+
+-@Value("${property.name:Default Value}")
+ -annotation to get properties into Java.
+ -set default value after colon.
+ -only works with the Spring-managed beans, not POJOs
+
+-server.port=0 (run on random ports)
+java -jar springapp.jar -Dserver.port=8081
+
+@JSonIgnore annotation are for fields you don't want to return in the JSON Response. (From Jackson library)
+
+Project Lombok
+-built with Java
+-to avoid boilerplate code, use Project Lombok
+-Getters, Setters, Constructors are easy to have with just annotations.
+-Can be used in any Java Application (Spring, Sprint Boot, Sling, etc, any Java app)
+-add Lombok dependency in Maven project
+-(may need to install Project Lombok locally and link IDE)
+-@Getter, @Setter can be specified on individual fields as needed or on the Class level for all fields.
+-@ToString, @EqualsAndHashCode are also optional annotations.
+-@Data adds all of the above 4 annotations.
+-@AllArgsConstructor and @NoArgsConstructor can be used to add constructors.
+
+JPA Introduction
+-JPA stands for Java Persistence API (interface)
+-ORM stands for Object Relational Mapping - maps class/fields -> table/columns in database
+-Hibernate is one of the implementations of JPA.
+-JPQL - Java Persistence Query Language (similar to SQL), refer to class instead of table, refer to variables inside the class instead of columns.
+

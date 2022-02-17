@@ -21,6 +21,10 @@ public class StudentController {
         return studentService.getStudents();
     }
 
+    @GetMapping("/v1")
+    public NewStudent getNewStudent() {
+        return new NewStudent(1, "Victor","Computer Programming",5.0);
+    }
     @PostMapping
     public void registerNewStudent(@RequestBody Student student) {
         studentService.addNewStudent(student);
