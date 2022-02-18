@@ -44,5 +44,6 @@ JPA Introduction
 -Hibernate is one of the implementations of JPA.
 -JPQL - Java Persistence Query Language (similar to SQL), refer to class instead of table, refer to variables inside the class instead of columns.
 
--@NotBlank used to require a field/key is present in payload. @NotBlank(message = "Field is required")
+-@NotBlank/@NotNull used to require a field/key is present in payload. @NotBlank(message = "Field is required")
+-@NotBlank for Strings and @NotNull for longs/doubles
 -@Valid required next to @RequestBody for Get/Post/etc mappings for validation to take place.
