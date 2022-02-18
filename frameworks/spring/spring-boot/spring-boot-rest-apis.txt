@@ -47,3 +47,8 @@ JPA Introduction
 -@NotBlank/@NotNull used to require a field/key is present in payload. @NotBlank(message = "Field is required")
 -@NotBlank for Strings and @NotNull for longs/doubles
 -@Valid required next to @RequestBody for Get/Post/etc mappings for validation to take place.
+
+Relationships
+-1-1 @OnetoOne, @JoinColumn(name="<columnNameInDB>") (owning side)
+-1-1 <-> @OnetoOne(mappedBy="<keyFromOwningSide>") <-- on non-owning side
+-1-many
