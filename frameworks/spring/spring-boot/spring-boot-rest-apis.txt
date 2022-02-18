@@ -49,6 +49,12 @@ JPA Introduction
 -@Valid required next to @RequestBody for Get/Post/etc mappings for validation to take place.
 
 Relationships
--1-1 @OnetoOne, @JoinColumn(name="<columnNameInDB>") (owning side)
+-1-1 @OnetoOne, @JoinColumn(name="<foreignKeyColumnNameInDB>") (owning side)
 -1-1 <-> @OnetoOne(mappedBy="<keyFromOwningSide>") <-- on non-owning side
--1-many
+-1-many - @ManyToOne, @JoinColumn(name="<foreignKeyColumnNameInDB>") (owning side)
+-1-many <-> "private List<<Class>> nameOfVariable", @OneToMany(mappedBy="<keyFromOwningSide>") < -- on non-owning side
+i.e. 
+Student (owning side) 1-1 relationship
+Address (non owning side) 1-1 relationship
+Subject (owning side) many-1 relationship
+Student (non owning side) 1-many relationship
