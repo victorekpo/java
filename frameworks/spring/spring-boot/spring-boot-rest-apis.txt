@@ -58,3 +58,11 @@ Student (owning side) 1-1 relationship
 Address (non owning side) 1-1 relationship
 Subject (owning side) many-1 relationship
 Student (non owning side) 1-many relationship
+
+Importance of API Documentation (Swagger UI)
+-Consumer should know what APIs are provided
+-Consumer should know 
+  -the URL for the API, and 
+  -what needs to be passed in the request payload and 
+  -what to expect in return.
+
