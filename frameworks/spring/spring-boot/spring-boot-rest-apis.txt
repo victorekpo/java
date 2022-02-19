@@ -65,4 +65,21 @@ Importance of API Documentation (Swagger UI)
   -the URL for the API, and 
   -what needs to be passed in the request payload and 
   -what to expect in return.
+-Swagger UI 
+  -builds documentation for APIs automatically
+  -can detect updates from the API
+  -also works just like Postman, can send requests (consume the API)
+  -very little configuration (just add 3 dependencies, springfox-boot-starter, springfox-swagger2, springfox-swagger-ui (groupId = io.springfox), version 3+).
+  -then enable Swagger in the main class of the SpringBoot App. @EnableSwagger2 
+  -application.properties
+	spring.mvc.pathmatch.matching-strategy=ant_path_matcher;
+  -bean configuration 
+		@Bean
+		public Docket api() {
+			return new Docket(DocumentationType.SWAGGER_2)
+					.select()
+					.apis(RequestHandlerSelectors.any())
+					.paths(PathSelectors.any())
+					.build();
+		}
 
