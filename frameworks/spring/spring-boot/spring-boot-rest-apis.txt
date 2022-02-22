@@ -101,4 +101,24 @@ Error < Warn < Info < Debug < Trace
 -SLF4J 
 Logger logger = LoggerFactory.getLogger(StudentController.class [OR] getClass() [From Object class]);
 
+To Add Log File, add to application.properties file
+logging.file.name=app.log
+logging.file.max-size
+logging.file.max-history(in days)
+logging.file.path
+
+
+Aspect-Oriented Programming (AOP)
+-separates logic and provides modularity
+-Set PointCuts and JoinPoints and advices (before, after, afterreturn, around)
+-Before Advice will run before the method's statement block starts.
+-@Configuration
+-@Aspect
+-@Before(value = "execution(* com.yourpackagename.*.*(..)) and args(object)")
+public void beforeAdvice (JoinPoint joinPoint, Object object) {
+	// add actions i.e. logger.info("Request = "+ object);
+}
+-After Advice will run before the method's return statement executes.
+-After Return Advice will run after the method's return statement executes.
+-Around Advice will run for every lifecycle.
  
