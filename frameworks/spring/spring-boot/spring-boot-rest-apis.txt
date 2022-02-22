@@ -83,3 +83,22 @@ Importance of API Documentation (Swagger UI)
 					.build();
 		}
 
+-OpenAPI
+   <dependency>
+      <groupId>org.springdoc</groupId>
+      <artifactId>springdoc-openapi-ui</artifactId>
+      <version>1.6.6</version>
+   </dependency>
+https://springdoc.org/
+
+Logging Level Hierarchy
+Error < Warn < Info < Debug < Trace
+-By default Spring Boot uses the Info logging level (comes with Warn & Error also).
+-You can have different log levels for different packages and classes.
+-Create log file which contains all logs for Spring Boot Application.
+-spring-boot-starter-web comes with the following logging libraries:
+-logback, log4j, log4j to slf4j, jul to slf4j
+-SLF4J 
+Logger logger = LoggerFactory.getLogger(StudentController.class);
+
+ 
