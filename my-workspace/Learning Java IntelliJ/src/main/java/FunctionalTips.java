@@ -1,5 +1,6 @@
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -60,6 +61,7 @@ public class FunctionalTips
         }
         return s;
     }
+    @ToString
     public static class Person {
         private final String name;
         private final Gender gender;
