@@ -1,4 +1,4 @@
-Spring Boot & REST APIs
+Learn REST API with Java, Spring Framework & JPA Using JSON. Spring AOP, Lombok, Swagger, Logging, JPQL, MySQL, Heroku
 
 REST = Representational State Transfer
 
@@ -12,7 +12,6 @@ JSON
 What is Spring Boot?
 -based on Spring Framework
 -Requires less configuration.
-
 -Properties file key/value pair
 -key=value syntax
 
@@ -133,3 +132,41 @@ public void aroundAvice (ProceedingJoinPoint proceedingJoinPoint, Object object)
   logger.info("Response is "+ returningObject);
 }
 // note that join points are instances of the execution control, proceeding join points are the ones for around
+
+Spring Boot Scheduler
+-performs tasks at a fixed interval
+-Cron Expression https://www.baeldung.com/cron-expressions
+-in main class add @EnableScheduling
+-in Service layer, add "MyScheduler" class
+-@Service annotation (MyScheduler class)
+-add method
+  @Scheduled(cron="<cron expression">) 
+  public void firstScheduler() { 
+    // ADD ACTIONS
+  }
+
+
+MORE with Spring Boot & Others
+GraphQL with Spring Boot
+https://www.udemy.com/course/graphql-with-java-spring-boot-query-mutation-schema-resolver-edge-jpa/?couponCode=BONUSLEC
+
+Reports with JasperReport and Spring Boot
+https://www.udemy.com/course/reporting-with-jasperreports-java-spring-boot-jasperstudio-jaspersoft/?couponCode=BONUSLEC
+
+Java Messaging Service
+https://www.udemy.com/course/java-messaging-service-spring-mvc-spring-boot-activemq/?couponCode=NOV192
+
+Pivotal Cloud Foundry
+https://www.udemy.com/course/learn-pivotal-cloud-foundry-pcf-deploy-spring-boot-spring-mvc-apps/?couponCode=NOV192
+
+Java Interview Question
+https://www.udemy.com/course/java-interview-preparation/?couponCode=NOV192
+
+RabbitMQ with PHP - Asynchronous Messaging with PHP
+https://www.udemy.com/course/rabbitmq-with-php-asynchronous-messaging-with-php/?couponCode=NOV192
+
+Spring Framework - Social Signin, PayPal, JMS, Velocity
+https://www.udemy.com/course/advanced-spring-framework/?couponCode=NOV192
+
+Deploy NodeJS Apps to Pivotal Cloud Foundry (PCF)
+https://www.udemy.com/course/learn-to-deploy-nodejs-apps-to-pivotal-cloud-foundry-pcf/?couponCode=NOV192
