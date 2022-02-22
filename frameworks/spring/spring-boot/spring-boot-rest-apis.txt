@@ -99,6 +99,6 @@ Error < Warn < Info < Debug < Trace
 -spring-boot-starter-web comes with the following logging libraries:
 -logback, log4j, log4j to slf4j, jul to slf4j
 -SLF4J 
-Logger logger = LoggerFactory.getLogger(StudentController.class);
+Logger logger = LoggerFactory.getLogger(StudentController.class [OR] getClass() [From Object class]);
 
  
