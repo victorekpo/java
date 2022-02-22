@@ -120,5 +120,6 @@ public void beforeAdvice (JoinPoint joinPoint, Object object) {
 }
 -After Advice will run before the method's return statement executes.
 -After Return Advice will run after the method's return statement executes.
+-For After Return, add , returning = "returningObject" after value in the Advice attributes to pass the return value to the Advice method.
 -Around Advice will run for every lifecycle.
  
