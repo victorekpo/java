@@ -118,8 +118,18 @@ Aspect-Oriented Programming (AOP)
 public void beforeAdvice (JoinPoint joinPoint, Object object) {
 	// add actions i.e. logger.info("Request = "+ object);
 }
+@After
 -After Advice will run before the method's return statement executes.
 -After Return Advice will run after the method's return statement executes.
+-@AfterReturning
 -For After Return, add , returning = "returningObject" after value in the Advice attributes to pass the return value to the Advice method.
--Around Advice will run for every lifecycle.
- 
+-Around Advice is a combination of @Before and @AfterReturn Advices.
+-@Around
+public void aroundAvice (ProceedingJoinPoint proceedingJoinPoint, Object object) {
+//SOME ACTION
+  logger.info("Request is "+ object);
+  Object returningObject = null;
+  returningObject = proceedingJoinPoint.proceed(); // calls the intercepted method
+  logger.info("Response is "+ returningObject);
+}
+// note that join points are instances of the execution control, proceeding join points are the ones for around
