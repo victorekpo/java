@@ -1,2 +1,69 @@
 Getting Started with Spring and Hibernate
 
+Why Spring?
+-very popular framework for building Java apps
+-initially a simpler lightweight alternative to J2EE
+-provides a large number of helper classes to make things easier (hence the term Spring.. i.e. spring into action)
+
+History of JEE
+-J2EE 1.2 - Servlets, JSP, Enterprise Java Beans, Java Message Service, RMI - 1999
+-J2EE 1.3 - EJB, CMP, JCA - 2001
+-J2EE 1.4 - Web Services Mgmt Deployment - 2003
+-Java EE 5 - Ease of use, EJB 3, JPA, JSF, JAXB, JAX-WS - 2006 (EJB 3.1 much easier to use)
+-Java EE 6 - Pruning, Ease of use, JAX-RS, CDI, Bean-Validation - 2009 
+-Java EE 7 - JMS 2, Batch, TX, Concurrency, Web Sockets - 2013 - Similar features like Core Spring, but by this time too late for market)
+-Java EE 8 - 2016/2017
+
+EJB v1 and v2 - Complexity
+-Early version of Enterprise Java Beans were extremely complex, XML deployment descriptors, multiple interfaces, (EJB Client, Home Interface (Home Object), Component Interface(EJB object), Bean Class), poor performance of Entity Beans
+-Rod Johnson, Founder of Spring - Book: J2EE Development without EJB, Wrox Press
+-Book: Java Development with the Spring Framework, Wrox Press
+
+Spring Timeline
+Spring 1.0 - 2004
+Spring 2.0 - 2006
+Spring 3.0 - 2009
+Spring 4.0 - 2013
+Spring 4.3 - Mar 2016
+Spring 5 - Sep 2017
+-became very popular in the industry over Java EE.
+-Most sought-after Java skill set by employers and recruiters.
+-learn both Spring and Java EE
+-skills are interchangeable, both frameworks are almost in sync
+
+What's New in Spring 5
+-updated minimum requirements for Java 8 or higher
+-deprecated legacy integration for: Tiles, Velocity, Portlet, Guava, etc
+-Upgraded Spring MVC to use new versions of Servlet API 4.0
+-added new reactive programming framework: Spring WebFlux
+www.luv2code.com/spring-5-whats-new (Release Notes)
+www.luv2code.com/spring-5-faq (Spring 5 FAQ)
+
+What About Spring 4?
+-some projects are still using Spring 4
+-core Spring 4 features still work on Spring 5
+-IoC, Dependency Injection, Spring AOP, Spring MVC
+
+Spring 5 Specific Features
+-will not work with Spring 4 such as: Spring 5 WebFlux
+
+Why Spring?
+-Simplify Java Enterprise Development
+-Lightweight development with Java POJOs
+-Dependency injection to promote loose coupling
+-Declarative programming with Aspect-Oriented-Programming (AOP)
+-Minimize boilerplate Java code
+-Core Container - factory for creating beans, manage bean dependencies
+  -SpEL (Spring Expression Language, can refer to other beans)
+  -Container includes Beans, Core, SpEL, Context
+  -Aspect Oriented Programming
+  -AOP, Aspects, Instrumentation, Messaging
+-Data Access Layer
+  -JDBC, Object Relational Mapping (ORM), Transactions, OXM, JMS (Java Messaging Service) - send messages to a messaging queue
+-Web Layer
+  -Servlet, WebSocket, Web, Portlet
+-Test Driven Development
+  -Unit
+  -Integration
+  -Mock
+
