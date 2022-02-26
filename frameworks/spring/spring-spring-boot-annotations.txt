@@ -278,3 +278,6 @@ JpaRepository is a combination of CrudRepository and PagingAngeSortingRepository
 
 For each table you will have one entity class.
 For each entity class you will have one repository.
+
+Sources: https://github.com/Buzzardo/spring-docs/blob/master/annotation-cheat-sheet.adoc#dependency-injection
+
