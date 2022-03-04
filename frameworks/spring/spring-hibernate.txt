@@ -67,3 +67,29 @@ Why Spring?
   -Integration
   -Mock
 
+Spring Projects
+https://spring.io/projects
+
+Installing Tomcat
+-New version of Tomcat 10 was released to supoprt Jakarta EE 9
+  -renamed packages: javax.* to jakarta.*
+  -breaking change for Java EE apps
+-Spring 5 currently does not suppor.t the new package renaming Jakarta EE 9
+-As a result, Spring 5 does not currently work on Tomcat 10
+-Use Tomcat 9 for Spring 5 apps.
+-Spring Team is aware of this issue: https://github.com/spring-projects/spring-framework/issues/25354
+-Download Tomcat @ tomcat.apache.org
+-Double-click to run installer
+-services.msc to see the service in Windows
+
+Connecting Eclipse with Tomcat
+-Add New Server
+-Define a New Server, go to Apache and select the Tomcat server
+
+Setting Up A Spring Project
+-add ClassPath .JAR Files
+
+Inversion of Control (IoC)
+-The approach of outsourcing the construction and management of objects; outsource to an object factory
+
+
