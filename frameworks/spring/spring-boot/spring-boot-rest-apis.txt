@@ -6,7 +6,7 @@ SOAP vs REST
 SOAP - has only XML data format but REST has XML or JSON
 REST is easier to implement/consume than SOAP
 
-JSON
+JSON9:13 AM 3/22/20229:13 AM 3/22/20229:13 AM 3/22/2022
 -Key-value pair similar to Map that we have in Java, only difference is Java has values of different data types but JSON has Array, String,Integer,Double as value data type.
 
 What is Spring Boot?
@@ -156,7 +156,8 @@ https://www.udemy.com/course/reporting-with-jasperreports-java-spring-boot-jaspe
 Java Messaging Service
 https://www.udemy.com/course/java-messaging-service-spring-mvc-spring-boot-activemq/?couponCode=NOV192
 
-Pivotal Cloud Foundry
+Pivotal Cloud  
+Foundry
 https://www.udemy.com/course/learn-pivotal-cloud-foundry-pcf-deploy-spring-boot-spring-mvc-apps/?couponCode=NOV192
 
 Java Interview Question
