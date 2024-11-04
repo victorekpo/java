@@ -10,6 +10,9 @@ public class Streams {
                 .collect(Collectors.toList());
         int total = characterSum(List1, 2);
         System.out.println("Number of characters is " + total);
+        List1.stream()
+                        .forEach(System.out::println);
+
     }
 
     static int characterSum(final List<String> words, final int threshold) {
