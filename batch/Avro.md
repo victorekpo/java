@@ -131,6 +131,7 @@ public class AvroExample {
 Using Avro with Java allows for efficient and compact serialization. Define your schema, generate classes, and then use Avro’s API for easy serialization and deserialization. This example can be extended to handle more complex data structures and larger datasets. Avro’s support for schema evolution makes it especially useful for distributed systems where backward compatibility is essential.
 
 
+Source: https://avro.apache.org/docs/1.11.1/getting-started-java/
 
 
 
