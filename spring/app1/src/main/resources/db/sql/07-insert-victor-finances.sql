@@ -1,0 +1,1 @@
+INSERT INTO Finances (PersonIndex, MonthlyExpectedExpenses, MonthlyExpectedIncome) VALUES ('victor001', 7000, 10000);

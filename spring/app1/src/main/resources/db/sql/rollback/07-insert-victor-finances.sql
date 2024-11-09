@@ -1,0 +1,1 @@
+DELETE FROM Finances WHERE BudgetID = 1 AND PersonIndex = "victor001";

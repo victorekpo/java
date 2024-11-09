@@ -1,0 +1,1 @@
+DELETE FROM People where FirstName = 'Victor' AND LastName = 'Ekpo' AND PersonID = 1;

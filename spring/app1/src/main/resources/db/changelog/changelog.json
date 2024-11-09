@@ -1,0 +1,207 @@
+{
+  "databaseChangeLog": [
+    {
+      "changeSet": {
+        "id": "01-create-table-people",
+        "author": "vicbot",
+        "changes": [
+          {
+            "sqlFile": {
+              "dbms": "!h2, mysql",
+              "splitStatements": true,
+              "path": "db/sql/01-create-table-people.sql",
+              "stripComments": false
+            },
+            "tagDatabase": {
+              "tag": "v0.1"
+            }
+          }
+        ],
+        "rollback": [
+          {
+            "sqlFile": {
+              "dbms": "!h2, mysql",
+              "splitStatements": true,
+              "path": "db/sql/rollback/01-create-table-people.sql",
+              "stripComments": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "changeSet": {
+        "id": "02-create-table-category",
+        "author": "vicbot",
+        "changes": [
+          {
+            "sqlFile": {
+              "dbms": "!h2, mysql",
+              "splitStatements": true,
+              "path": "db/sql/02-create-table-categories.sql",
+              "stripComments": false
+            },
+            "tagDatabase": {
+              "tag": "v0.2"
+            }
+          }
+        ],
+        "rollback": [
+          {
+            "sqlFile": {
+              "dbms": "!h2, mysql",
+              "splitStatements": true,
+              "path": "db/sql/rollback/02-create-table-categories.sql",
+              "stripComments": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "changeSet": {
+        "id": "03-create-table-transactions",
+        "author": "vicbot",
+        "changes": [
+          {
+            "sqlFile": {
+              "dbms": "!h2, mysql",
+              "splitStatements": true,
+              "path": "db/sql/03-create-table-transactions.sql",
+              "stripComments": false
+            },
+            "tagDatabase": {
+              "tag": "v0.3"
+            }
+          }
+        ],
+        "rollback": [
+          {
+            "sqlFile": {
+              "dbms": "!h2, mysql",
+              "splitStatements": true,
+              "path": "db/sql/rollback/03-create-table-transactions.sql",
+              "stripComments": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "changeSet": {
+        "id": "04-insert-transaction-categories",
+        "author": "vicbot",
+        "changes": [
+          {
+            "sqlFile": {
+              "dbms": "!h2, mysql",
+              "splitStatements": true,
+              "path": "db/sql/04-insert-transaction-categories.sql",
+              "stripComments": false
+            },
+            "tagDatabase": {
+              "tag": "v0.4"
+            }
+          }
+        ],
+        "rollback": [
+          {
+            "sqlFile": {
+              "dbms": "!h2, mysql",
+              "splitStatements": true,
+              "path": "db/sql/rollback/04-insert-transaction-categories.sql",
+              "stripComments": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "changeSet": {
+        "id": "05-insert-person-victor",
+        "author": "vicbot",
+        "changes": [
+          {
+            "sqlFile": {
+              "dbms": "!h2, mysql",
+              "splitStatements": true,
+              "path": "db/sql/05-insert-person-victor.sql",
+              "stripComments": false
+            },
+            "tagDatabase": {
+              "tag": "v0.5"
+            }
+          }
+        ],
+        "rollback": [
+          {
+            "sqlFile": {
+              "dbms": "!h2, mysql",
+              "splitStatements": true,
+              "path": "db/sql/rollback/05-insert-person-victor.sql",
+              "stripComments": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "changeSet": {
+        "id": "06-create-table-finances",
+        "author": "vicbot",
+        "changes": [
+          {
+            "sqlFile": {
+              "dbms": "!h2, mysql",
+              "splitStatements": true,
+              "path": "db/sql/06-create-table-finances.sql",
+              "stripComments": false
+            },
+            "tagDatabase": {
+              "tag": "v0.5"
+            }
+          }
+        ],
+        "rollback": [
+          {
+            "sqlFile": {
+              "dbms": "!h2, mysql",
+              "splitStatements": true,
+              "path": "db/sql/rollback/06-create-table-finances.sql",
+              "stripComments": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "changeSet": {
+        "id": "07-insert-victor-finances",
+        "author": "vicbot",
+        "changes": [
+          {
+            "sqlFile": {
+              "dbms": "!h2, mysql",
+              "splitStatements": true,
+              "path": "db/sql/07-insert-victor-finances.sql",
+              "stripComments": false
+            },
+            "tagDatabase": {
+              "tag": "v0.7"
+            }
+          }
+        ],
+        "rollback": [
+          {
+            "sqlFile": {
+              "dbms": "!h2, mysql",
+              "splitStatements": true,
+              "path": "db/sql/rollback/07-insert-victor-finances.sql",
+              "stripComments": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

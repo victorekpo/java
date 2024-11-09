@@ -1,0 +1,1 @@
+INSERT INTO People (PersonIndex, FirstName, LastName, Birthdate) VALUES ('victor001', 'Victor', 'Ekpo', '1987-04-09 08:00:00');
