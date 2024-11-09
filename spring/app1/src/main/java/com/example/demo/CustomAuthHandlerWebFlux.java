@@ -1,19 +1,19 @@
-package com.example.demo;
-
-
-import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.web.server.WebFilterExchange;
-import org.springframework.security.web.server.authentication.ServerAuthenticationSuccessHandler;
-import org.springframework.stereotype.Component;
-import reactor.core.publisher.Mono;
-
-@Component
-public class CustomAuthHandlerWebFlux implements ServerAuthenticationSuccessHandler {
-
-    @Override
-    public Mono<Void> onAuthenticationSuccess(WebFilterExchange webFilterExchange, Authentication authentication) {
-        return Mono.fromRunnable(() -> webFilterExchange.getExchange().getResponse().setStatusCode(HttpStatus.FOUND))
-                .then(webFilterExchange.getExchange().getResponse().setComplete());
-    }
-}
+//package com.example.demo;
+//
+//
+//import org.springframework.http.HttpStatus;
+//import org.springframework.security.core.Authentication;
+//import org.springframework.security.web.server.WebFilterExchange;
+//import org.springframework.security.web.server.authentication.ServerAuthenticationSuccessHandler;
+//import org.springframework.stereotype.Component;
+//import reactor.core.publisher.Mono;
+//
+//@Component
+//public class CustomAuthHandlerWebFlux implements ServerAuthenticationSuccessHandler {
+//
+//    @Override
+//    public Mono<Void> onAuthenticationSuccess(WebFilterExchange webFilterExchange, Authentication authentication) {
+//        return Mono.fromRunnable(() -> webFilterExchange.getExchange().getResponse().setStatusCode(HttpStatus.FOUND))
+//                .then(webFilterExchange.getExchange().getResponse().setComplete());
+//    }
+//}

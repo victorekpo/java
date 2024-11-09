@@ -19,7 +19,7 @@
 		<micrometer.version>1.13.6</micrometer.version>
 		<lombok.version>1.18.34</lombok.version>
 		<testcontainers.version>1.20.3</testcontainers.version>
-		<springdoc.version>1.8.0</springdoc.version>
+		<springdoc.version>2.6.0</springdoc.version>
 		<reactor.version>3.5.0</reactor.version>
 		<h2.version>2.1.214</h2.version>
 	</properties>
@@ -65,10 +65,10 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<!-- Spring Boot Starter for WebFlux -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-webflux</artifactId>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter-webflux</artifactId>-->
+<!--		</dependency>-->
 		<!-- Kafka Streams -->
 		<dependency>
 			<groupId>org.apache.kafka</groupId>
@@ -131,24 +131,18 @@
 			<version>${mysql-connector.version}</version>
 			<scope>runtime</scope>
 		</dependency>
-		<!-- Springdoc OpenAPI UI for API Documentation -->
+		<!-- Springdoc OpenAPI WebMVC Starter for API Documentation -->
 		<dependency>
 			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-ui</artifactId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
 			<version>${springdoc.version}</version>
 		</dependency>
-		<!-- Springdoc OpenAPI WebMVC Core for API Documentation -->
-		<dependency>
-			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-webmvc-core</artifactId>
-			<version>${springdoc.version}</version>
-		</dependency>
-		<!-- Springdoc OpenAPI WebFlux Core for API Documentation -->
-		<dependency>
-			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-webflux-core</artifactId>
-			<version>${springdoc.version}</version>
-		</dependency>
+		<!-- Springdoc OpenAPI WebFlux Starter for API Documentation -->
+<!--		<dependency>-->
+<!--			<groupId>org.springdoc</groupId>-->
+<!--			<artifactId>springdoc-openapi-starter-webflux-api</artifactId>-->
+<!--			<version>${springdoc.version}</version>-->
+<!--		</dependency>-->
 		<!-- Spring Boot Starter for Logging with Logback -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
