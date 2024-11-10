@@ -26,13 +26,18 @@ import java.util.Map;
 public class JmsConfig {
 
     @Bean
-    public ConnectionFactory connectionFactory() {
-        SqsClient sqsClient = SqsClient.builder()
+    public SqsClient sqsClient() {
+        return SqsClient.builder()
                 .endpointOverride(URI.create("http://localhost:9324"))
                 .region(Region.US_EAST_1)
                 .credentialsProvider(DefaultCredentialsProvider.create())
                 .build();
+    }
 
+    // Spring will automatically inject the SqsClient bean when it is passed as a parameter to the connectionFactory method.
+    // This is known as method injection. Here is the relevant part of the JmsConfig class:
+    @Bean
+    public ConnectionFactory connectionFactory(SqsClient sqsClient) {
         // Create queues if they do not exist
         String[] queues = {"my-queue", "my-queue-dlq"};
         Map<String, String> queueUrls = new HashMap<>();
