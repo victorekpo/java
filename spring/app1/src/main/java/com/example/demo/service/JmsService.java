@@ -6,9 +6,6 @@ import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
-import jakarta.jms.JMSException;
-import jakarta.jms.TextMessage;
-
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.stream.Collectors;
@@ -38,3 +35,6 @@ public class JmsService {
         return internalQueue.stream().collect(Collectors.toList());
     }
 }
+
+// https://docs.spring.io/spring-framework/reference/integration/jms/sending.html
+// https://docs.spring.io/spring-framework/reference/integration/jms/receiving.html

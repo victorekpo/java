@@ -82,3 +82,24 @@ public class JmsConfig {
         return converter;
     }
 }
+
+// The JmsConfig class is annotated with @Configuration to indicate that it is a configuration class.
+// The @EnableJms annotation enables JMS features in the application.
+// This configuration class sets up JMS (Java Message Service) with Amazon SQS (Simple Queue Service) in a Spring Boot application. Here's a breakdown of what each part does:
+// SqsClient Bean:
+// Creates an SqsClient bean configured to connect to a local SQS endpoint with specific region and credentials.
+// ConnectionFactory Bean:
+// Uses the SqsClient to create an SQSConnectionFactory.
+// Ensures the specified queues (my-queue and my-queue-dlq) exist, creating them if necessary.
+// Prints the URLs of the created queues.
+// JmsTemplate Bean:
+// Creates a JmsTemplate bean using the ConnectionFactory.
+// Sets a custom message converter (MappingJackson2MessageConverter) to convert messages to JSON format.
+// DefaultJmsListenerContainerFactory Bean:
+// Configures a DefaultJmsListenerContainerFactory with the ConnectionFactory and message converter.
+// Sets an error handler to log errors and send problematic messages to a dead-letter queue (my-queue-dlq).
+// MessageConverter Bean:
+// Configures a MappingJackson2MessageConverter to convert messages to JSON format, setting the target type to TEXT and specifying a type ID property name.
+
+// https://sdk.amazonaws.com/java/api/latest/software/amazon/awssdk/services/sqs/package-summary.html
+// https://docs.spring.io/spring-framework/reference/integration/jms.html
