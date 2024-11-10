@@ -14,6 +14,12 @@ import org.springframework.jms.support.converter.MessageType;
 import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.sqs.SqsClient;
+import software.amazon.awssdk.services.sqs.model.CreateQueueRequest;
+import software.amazon.awssdk.services.sqs.model.CreateQueueResponse;
+
+import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 
 @Configuration
 @EnableJms
@@ -22,9 +28,23 @@ public class JmsConfig {
     @Bean
     public ConnectionFactory connectionFactory() {
         SqsClient sqsClient = SqsClient.builder()
-                .region(Region.US_EAST_1) // Replace with your AWS region
+                .endpointOverride(URI.create("http://localhost:9324"))
+                .region(Region.US_EAST_1)
                 .credentialsProvider(DefaultCredentialsProvider.create())
                 .build();
+
+        // Create queues if they do not exist
+        String[] queues = {"my-queue", "my-queue-dlq"};
+        Map<String, String> queueUrls = new HashMap<>();
+        for (String queue : queues) {
+            CreateQueueRequest createQueueRequest = CreateQueueRequest.builder()
+                    .queueName(queue)
+                    .build();
+            CreateQueueResponse createQueueResponse = sqsClient.createQueue(createQueueRequest);
+            queueUrls.put(queue, createQueueResponse.queueUrl());
+        }
+
+        System.out.println("Queue URLs: " + queueUrls);
 
         return new SQSConnectionFactory(new ProviderConfiguration(), sqsClient);
     }
@@ -41,7 +61,11 @@ public class JmsConfig {
         DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory);
         factory.setMessageConverter(messageConverter());
-        factory.setErrorHandler(t -> System.err.println("An error has occurred in the transaction: " + t.getMessage()));
+        factory.setErrorHandler(t -> {
+            System.err.println("An error has occurred in the transaction: " + t.getMessage());
+            // Send the message to the DLQ
+            jmsTemplate(connectionFactory).convertAndSend("my-queue-dlq", t.getMessage());
+        });
         return factory;
     }
 
