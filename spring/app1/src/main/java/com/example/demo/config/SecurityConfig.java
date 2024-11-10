@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.config;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
@@ -40,3 +40,5 @@ public class SecurityConfig {
 // Security Filters: These are components that intercept HTTP requests and perform security checks.
 // Chain of Responsibility: The filters are organized in a chain, where each filter has a specific responsibility and can pass the request to the next filter in the chain.
 //        Configuration: The SecurityFilterChain bean in Spring Security configures this chain, specifying which filters to apply and in what order.
+// https://docs.spring.io/spring-security/reference/
+// https://docs.spring.io/spring-security/site/docs/5.4.1/reference/html5/#servlet-security

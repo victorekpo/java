@@ -1,12 +1,18 @@
 services:
-  activemq:
-    image: 'apache/activemq-classic:latest'
+  sqs:
+    image: softwaremill/elasticmq
     ports:
-      - '61616'
-  rabbitmq:
-    image: 'rabbitmq:latest'
+      - "9324:9324"
     environment:
-      - 'RABBITMQ_DEFAULT_PASS=secret'
-      - 'RABBITMQ_DEFAULT_USER=myuser'
-    ports:
-      - '5672'
+      - ELASTICMQ_CREATE_QUEUES='[{"name":"my-queue","defaultVisibilityTimeout":30,"delay":0,"receiveMessageWait":0}]'
+#  activemq:
+#    image: 'apache/activemq-classic:latest'
+#    ports:
+#      - '61616'
+#  rabbitmq:
+#    image: 'rabbitmq:latest'
+#    environment:
+#      - 'RABBITMQ_DEFAULT_PASS=secret'
+#      - 'RABBITMQ_DEFAULT_USER=myuser'
+#    ports:
+#      - '5672'
