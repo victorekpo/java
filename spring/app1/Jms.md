@@ -45,3 +45,19 @@ jar tf ~/.m2/repository/com/amazonaws/amazon-sqs-java-messaging-lib/2.1.3/amazon
 ./mvnw dependency:resolve -Dincludes=com.amazonaws:amazon-sqs-java-messaging-lib
 ```
 
+### Dependencies
+```xml
+<!-- Amazon SQS Java Messaging Library 2.1.3 (for compatibility with AWS SDK v2) -->
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>amazon-sqs-java-messaging-lib</artifactId>
+			<version>2.1.3</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jms</artifactId>
+			<version>6.1.14</version>
+		</dependency>
+
+```
