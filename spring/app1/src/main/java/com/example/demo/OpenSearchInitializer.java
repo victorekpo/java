@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import com.example.demo.service.opensearch.OpenSearchService;
+import org.opensearch.client.opensearch._types.OpenSearchException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -13,9 +14,27 @@ public class OpenSearchInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        openSearchService.createIndex();
-        openSearchService.createDocument();
-        openSearchService.addDocuments();
+        System.out.println("Creating OpenSearch index and adding documents...");
+        try {
+            try {
+                openSearchService.createIndex();
+            } catch (OpenSearchException e) {
+                System.out.println("Index already exists.");
+            }
+
+            try {
+                openSearchService.createDocument();
+                openSearchService.addDocuments();
+            } catch (OpenSearchException e) {
+                System.out.println("Error creating or adding documents.");
+            } catch (Exception e) {
+                System.out.println("An error occurred creating documents: " + e.getMessage());
+                System.out.println("Exception: " + e.getClass().getName());
+            }
+        } catch (Exception e) {
+            System.out.println("An error occurred: " + e.getMessage());
+            System.out.println("Exception: " + e.getClass().getName());
+        }
     }
 }
 

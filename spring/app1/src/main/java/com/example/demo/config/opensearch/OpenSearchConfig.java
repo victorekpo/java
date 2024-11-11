@@ -19,6 +19,7 @@ import software.amazon.awssdk.http.apache.ApacheHttpClient;
 import software.amazon.awssdk.regions.Region;
 
 import javax.net.ssl.SSLContext;
+import java.util.Arrays;
 
 @Configuration
 @EnableScheduling
@@ -39,31 +40,48 @@ public class OpenSearchConfig {
 
         ApacheHttpClient5TransportBuilder builder = ApacheHttpClient5TransportBuilder.builder(host);
 
-        if (!isLocal) {
-            SSLContext sslContext = SSLContextBuilder.create()
-                    .loadTrustMaterial(null, (chains, authType) -> true)
-                    .build();
+//        if (!isLocal) {
 
-            TlsStrategy tlsStrategy = ClientTlsStrategyBuilder.create()
-                    .setSslContext(sslContext)
-                    .build();
+        SSLContext sslContext = SSLContextBuilder.create()
+                .loadTrustMaterial(null, (chains, authType) -> true)
+                .build();
 
-            PoolingAsyncClientConnectionManager connectionManager = PoolingAsyncClientConnectionManagerBuilder.create()
-                    .setTlsStrategy(tlsStrategy)
-                    .build();
+        TlsStrategy tlsStrategy = ClientTlsStrategyBuilder.create()
+                .setSslContext(sslContext)
+                .build();
 
-            builder.setHttpClientConfigCallback(httpClientBuilder -> httpClientBuilder
-                    .setConnectionManager(connectionManager)
-                    .addRequestInterceptorFirst((request, entity, context) -> {
-                        // Add custom headers
-                        request.addHeader("app-name", "your-app-name");
-                    })
-            );
-        }
+        PoolingAsyncClientConnectionManager connectionManager = PoolingAsyncClientConnectionManagerBuilder.create()
+                .setTlsStrategy(tlsStrategy)
+                .build();
+
+        builder.setHttpClientConfigCallback(httpClientBuilder -> httpClientBuilder
+                .setConnectionManager(connectionManager)
+                .addRequestInterceptorFirst((request, entity, context) -> {
+                    // Add custom headers
+                    request.addHeader("app-name", "your-app-name");
+                })
+                .addRequestInterceptorFirst((request, entity, context) -> {
+                    System.out.println("Request: " + request.toString() + " " + request);
+                    System.out.println("Request URI: " + request.getRequestUri());
+                    System.out.println("Request Method: " + request.getMethod());
+                })
+                .addResponseInterceptorFirst((response, entity, context) -> {
+                    System.out.println("Response: " + response);
+                    System.out.println("Response Status: " + response.getCode());
+                })
+        );
+
+//        }
 
         OpenSearchTransport transport = builder.build();
         System.out.println("OpenSearch client created for " + domainName);
         System.out.println("OpenSearch host " + host.toString());
+
+        // Additional logging for debugging
+        System.out.println("Host: " + hostName);
+        System.out.println("Port: " + port);
+        System.out.println("Is Local: " + isLocal);
+
         return new OpenSearchClient(transport);
     }
 

@@ -15,6 +15,8 @@ services:
     environment:
       - discovery.type=single-node
       - OPENSEARCH_INITIAL_ADMIN_PASSWORD=1A!2@b3%c4d5e6f7g8h9i0j
+      # - plugins.security.disabled=true
+      - DISABLE_SECURITY_PLUGIN=true
     ports:
       - "9200:9200"
       - "9600:9600"

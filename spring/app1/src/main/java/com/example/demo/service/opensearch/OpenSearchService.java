@@ -30,6 +30,7 @@ public class OpenSearchService {
     public void createDocument() throws IOException {
         CreateRequest<Technology> createRequest = new CreateRequest.Builder<Technology>()
                 .index("my_index")
+                .id("example_id")
                 .document(new Technology("Example", "An example document"))
                 .build();
         CreateResponse createResponse = openSearchClient.create(createRequest);
