@@ -1,4 +1,4 @@
-package com.example.demo.config;
+package com.example.demo.config.opensearch;
 
 import org.apache.hc.client5.http.impl.nio.PoolingAsyncClientConnectionManager;
 import org.apache.hc.client5.http.impl.nio.PoolingAsyncClientConnectionManagerBuilder;
@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
+import org.springframework.scheduling.TaskScheduler;
 import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider;
 import software.amazon.awssdk.http.apache.ApacheHttpClient;
 import software.amazon.awssdk.regions.Region;
@@ -23,37 +24,46 @@ import javax.net.ssl.SSLContext;
 @EnableScheduling
 public class OpenSearchConfig {
 
+    public static volatile String[] openSearchCluster = new String[]{"localhost:9200"};
+
     @Bean
     public OpenSearchClient openSearchClient() throws Exception {
-        final HttpHost host = new HttpHost("https", "your-opensearch-domain", 443);
+        String domainName = openSearchCluster[0];
+        boolean isLocal = "localhost:9200".equals(domainName);
 
-        final SSLContext sslContext = SSLContextBuilder.create()
-                .loadTrustMaterial(null, (chains, authType) -> true)
-                .build();
+        String[] domainParts = domainName.split(":");
+        String hostName = domainParts[0];
+        int port = domainParts.length > 1 ? Integer.parseInt(domainParts[1]) : 443;
 
-        final TlsStrategy tlsStrategy = ClientTlsStrategyBuilder.create()
-                .setSslContext(sslContext)
-                .build();
+        HttpHost host = new HttpHost(isLocal ? "http" : "https", hostName, port);
 
-        final PoolingAsyncClientConnectionManager connectionManager = PoolingAsyncClientConnectionManagerBuilder.create()
-                .setTlsStrategy(tlsStrategy)
-                .build();
+        ApacheHttpClient5TransportBuilder builder = ApacheHttpClient5TransportBuilder.builder(host);
 
+        if (!isLocal) {
+            SSLContext sslContext = SSLContextBuilder.create()
+                    .loadTrustMaterial(null, (chains, authType) -> true)
+                    .build();
 
-        final DefaultCredentialsProvider credentialsProvider = DefaultCredentialsProvider.create();
+            TlsStrategy tlsStrategy = ClientTlsStrategyBuilder.create()
+                    .setSslContext(sslContext)
+                    .build();
 
+            PoolingAsyncClientConnectionManager connectionManager = PoolingAsyncClientConnectionManagerBuilder.create()
+                    .setTlsStrategy(tlsStrategy)
+                    .build();
 
+            builder.setHttpClientConfigCallback(httpClientBuilder -> httpClientBuilder
+                    .setConnectionManager(connectionManager)
+                    .addRequestInterceptorFirst((request, entity, context) -> {
+                        // Add custom headers
+                        request.addHeader("app-name", "your-app-name");
+                    })
+            );
+        }
 
-        final ApacheHttpClient5TransportBuilder builder = ApacheHttpClient5TransportBuilder.builder(host);
-        builder.setHttpClientConfigCallback(httpClientBuilder -> httpClientBuilder
-                .setConnectionManager(connectionManager)
-                .addRequestInterceptorFirst((request, entity, context) -> {
-                    // Add custom headers
-                    request.addHeader("app-name", "your-app-name");
-                })
-        );
-
-        final OpenSearchTransport transport = builder.build();
+        OpenSearchTransport transport = builder.build();
+        System.out.println("OpenSearch client created for " + domainName);
+        System.out.println("OpenSearch host " + host.toString());
         return new OpenSearchClient(transport);
     }
 
@@ -67,7 +77,7 @@ public class OpenSearchConfig {
     }
 
     @Bean
-    public ThreadPoolTaskScheduler taskScheduler() {
+    public TaskScheduler taskScheduler() {
         ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
         scheduler.setPoolSize(5);
         scheduler.setThreadNamePrefix("dns-resolver-");

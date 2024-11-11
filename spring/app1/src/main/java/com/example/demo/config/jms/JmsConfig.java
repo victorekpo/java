@@ -1,4 +1,4 @@
-package com.example.demo.config;
+package com.example.demo.config.jms;
 
 import com.amazon.sqs.javamessaging.ProviderConfiguration;
 import com.amazon.sqs.javamessaging.SQSConnectionFactory;

@@ -332,3 +332,6 @@
 		</plugins>
 	</build>
 </project>
+
+<!-- When resolving Java dependencies, its important to check the ./mvnw dependency:tree -Dverbose
+to know what is not actually loading due to conflicts -->

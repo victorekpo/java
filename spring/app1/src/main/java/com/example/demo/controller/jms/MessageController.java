@@ -1,6 +1,6 @@
-package com.example.demo.controller;
+package com.example.demo.controller.jms;
 
-import com.example.demo.service.JmsService;
+import com.example.demo.service.jms.JmsService;
 import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;

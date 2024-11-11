@@ -7,6 +7,19 @@ services:
       - ELASTICMQ_OPTS=-Dconfig.file=/opt/elasticmq.conf
     volumes:
       - ./elasticmq.conf:/opt/elasticmq.conf
+
+
+
+  opensearch:
+    image: opensearchproject/opensearch:latest
+    environment:
+      - discovery.type=single-node
+      - OPENSEARCH_INITIAL_ADMIN_PASSWORD=1A!2@b3%c4d5e6f7g8h9i0j
+    ports:
+      - "9200:9200"
+      - "9600:9600"
+
+
 #  activemq:
 #    image: 'apache/activemq-classic:latest'
 #    ports:
