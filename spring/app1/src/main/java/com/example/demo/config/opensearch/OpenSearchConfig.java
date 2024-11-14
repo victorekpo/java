@@ -61,13 +61,10 @@ public class OpenSearchConfig {
                     request.addHeader("app-name", "your-app-name");
                 })
                 .addRequestInterceptorFirst((request, entity, context) -> {
-                    System.out.println("Request: " + request.toString() + " " + request);
-                    System.out.println("Request URI: " + request.getRequestUri());
-                    System.out.println("Request Method: " + request.getMethod());
+                    System.out.println("Request: " + request.toString());
                 })
                 .addResponseInterceptorFirst((response, entity, context) -> {
                     System.out.println("Response: " + response);
-                    System.out.println("Response Status: " + response.getCode());
                 })
         );
 
