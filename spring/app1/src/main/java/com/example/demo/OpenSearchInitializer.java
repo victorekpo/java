@@ -24,6 +24,7 @@ public class OpenSearchInitializer implements CommandLineRunner {
         System.out.println("Creating OpenSearch index and adding documents...");
         try {
             try {
+                System.out.println("Clearing index...");
                 openSearchService.deleteIndex();
             } catch (OpenSearchException e) {
                 System.out.println("Index doesn't exist.");
@@ -31,7 +32,7 @@ public class OpenSearchInitializer implements CommandLineRunner {
 
             try {
                 // Example usage of createIndex
-                System.out.println("Creating...");
+                System.out.println("Creating index...");
                 openSearchService.createIndex();
 
                 // Example usage of createDocument
