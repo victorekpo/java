@@ -27,7 +27,8 @@ import java.util.Arrays;
 public class OpenSearchConfig {
 
     public static volatile DomainInfo[] openSearchCluster = new DomainInfo[] {
-            DomainInfo.builder().domainName("localhost:9200").build()
+            DomainInfo.builder().domainName("localhost:9200").build(),
+         //   DomainInfo.builder().domainName("anotherdomain.com:9200").build()
     };
 
     @Bean
