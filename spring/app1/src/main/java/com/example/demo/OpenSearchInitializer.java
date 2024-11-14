@@ -129,3 +129,5 @@ public class OpenSearchInitializer implements CommandLineRunner {
 //run(new String[]{"arg1", "arg2", "arg3"});
 
 // More examples: https://github.com/opensearch-project/opensearch-java/blob/main/samples/src/main/java/org/opensearch/client/samples/Bulk.java
+// https://opensearch.org/docs/latest/api-reference/document-apis/bulk/
+// https://github.com/opensearch-project/opensearch-java/issues/568
