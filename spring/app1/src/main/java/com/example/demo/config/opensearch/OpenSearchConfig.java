@@ -17,6 +17,7 @@ import org.springframework.scheduling.TaskScheduler;
 import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider;
 import software.amazon.awssdk.http.apache.ApacheHttpClient;
 import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.opensearch.model.DomainInfo;
 
 import javax.net.ssl.SSLContext;
 import java.util.Arrays;
@@ -25,11 +26,14 @@ import java.util.Arrays;
 @EnableScheduling
 public class OpenSearchConfig {
 
-    public static volatile String[] openSearchCluster = new String[]{"localhost:9200"};
+    public static volatile DomainInfo[] openSearchCluster = new DomainInfo[] {
+            DomainInfo.builder().domainName("localhost:9200").build()
+    };
 
     @Bean
     public OpenSearchClient openSearchClient() throws Exception {
-        String domainName = openSearchCluster[0];
+        String domainName = openSearchCluster[0].domainName();
+        System.out.println("Domain Name: " + domainName);
         boolean isLocal = "localhost:9200".equals(domainName);
 
         String[] domainParts = domainName.split(":");

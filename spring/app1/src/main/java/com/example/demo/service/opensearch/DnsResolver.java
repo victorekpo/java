@@ -7,12 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.stereotype.Component;
 import software.amazon.awssdk.services.opensearch.OpenSearchClient;
+import software.amazon.awssdk.services.opensearch.model.DomainInfo;
 import software.amazon.awssdk.services.opensearch.model.ListDomainNamesRequest;
 import software.amazon.awssdk.services.opensearch.model.ListDomainNamesResponse;
 
 import jakarta.annotation.PostConstruct;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -46,14 +49,14 @@ public class DnsResolver {
 
             ListDomainNamesRequest request = ListDomainNamesRequest.builder().build();
             ListDomainNamesResponse response = awsOpenSearchClient.listDomainNames(request);
-            String[] resolvedDns = response.domainNames().toArray(new String[0]);
+            List<DomainInfo> resolvedDnsList = response.domainNames();
 
-            if (resolvedDns.length > 1) {
-                OpenSearchConfig.openSearchCluster = resolvedDns;
-                logger.info("Resolved DNS: {}", (Object) resolvedDns);
+            if (resolvedDnsList.size() > 1) {
+                OpenSearchConfig.openSearchCluster = resolvedDnsList.toArray(new DomainInfo[0]);
+                logger.info("Resolved DNS: {} from {}", (Object) resolvedDnsList, Arrays.toString(OpenSearchConfig.openSearchCluster));
             } else {
-                OpenSearchConfig.openSearchCluster = new String[]{"localhost:9200"};
-                logger.info("Resolved DNS to localhost:9200");
+                OpenSearchConfig.openSearchCluster = new DomainInfo[] { DomainInfo.builder().domainName("localhost:9200").build() };
+                logger.info("Resolved DNS to localhost:9200; cluster={}", OpenSearchConfig.openSearchCluster[0].toString());
             }
         } catch (Exception e) {
             logger.error("Error resolving DNS", e);
