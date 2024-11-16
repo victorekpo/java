@@ -8,6 +8,8 @@ import org.apache.hc.core5.http.nio.ssl.TlsStrategy;
 import org.apache.hc.core5.ssl.SSLContextBuilder;
 import org.opensearch.client.opensearch.OpenSearchClient;
 import org.opensearch.client.transport.OpenSearchTransport;
+import org.opensearch.client.transport.aws.AwsSdk2Transport;
+import org.opensearch.client.transport.aws.AwsSdk2TransportOptions;
 import org.opensearch.client.transport.httpclient5.ApacheHttpClient5TransportBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +17,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.scheduling.TaskScheduler;
 import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider;
+import software.amazon.awssdk.http.SdkHttpClient;
 import software.amazon.awssdk.http.apache.ApacheHttpClient;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.opensearch.model.DomainInfo;
@@ -85,6 +88,21 @@ public class OpenSearchConfig {
         System.out.println("Is Local: " + isLocal);
 
         return new OpenSearchClient(transport);
+
+        // Method 2
+//        SdkHttpClient sdkHttpClient = ApacheHttpClient.builder().build();
+//
+//        OpenSearchTransport awsTransport = new AwsSdk2Transport(
+//                sdkHttpClient,
+//                hostName, // OpenSearch endpoint, without https://
+//                "es",
+//                Region.US_EAST_1, // signing service region
+//                AwsSdk2TransportOptions
+//                        .builder()
+//                        .addHeader("app-name", "your-app-name")
+//                        .build()
+//        );
+
     }
 
     @Bean
