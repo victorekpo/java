@@ -131,3 +131,110 @@ A: Not always; often when you are designing an application, you anticipate those
 
 Q: Should we make Duck an interface too?
 A: Not in this case As you'll see once we've got everything hooked together, we do benefit by having Duck not be an interface and having specific ducks, like MallardDuck, inherit common properties and methods. Now that we've removed what varies from the Duck interface, we get the benefits of this structure without the problems. (There's no benefit to making Duck an interface since the other properties are shared, no need to implement them individually, and the behaviors are already interfaces, which is the thing that varies among Ducks). Note: display() is an abstract method within duck which forces implementation on all subclasses, this is okay since all duck subclasses will look different. However, the behaviors can be shared.
+
+
+Design Pattern #1 - Strategy Pattern - The strategy pattern defines a family of algorithms, encapsulates each one, and makes them interchangeable. Strategy lets the algorithm vary independently from clients that use it.
+- Start with:
+  -an interface that defines the behavior method (no implementation)
+  -a subclass that implements the behavior specifically
+  -an abstract class that references the interface as a variable, and performAction methods to call the method in the interface
+  -a subclass that extends the abstract class and can dynamically set the performAction to the specific behavior.
+
+
+The Liskov Substitution Principle (LSP) is one of the five SOLID principles of object-oriented design, and it helps ensure that inheritance hierarchies are used correctly. It states:
+
+"Objects of a superclass should be replaceable with objects of its subclasses without affecting the correctness of the program."
+
+In simpler terms, a subclass should behave like its parent class, so that wherever the parent class is used, the subclass can be substituted seamlessly without breaking functionality.
+
+Key Concepts:
+Behavioral Compatibility:
+
+A subclass should not override or modify methods in a way that violates the expectations set by the parent class.
+The subclass must adhere to the same "contract" as the parent.
+Preconditions and Postconditions:
+
+Preconditions (requirements before a method runs) should not be strengthened in the subclass.
+Postconditions (guarantees after a method runs) should not be weakened in the subclass.
+No Surprises:
+
+A subclass should not introduce unexpected behaviors that its parent class does not have.
+
+
+The Liskov Substitution Principle (LSP) is one of the five SOLID principles of object-oriented design, and it helps ensure that inheritance hierarchies are used correctly. It states:
+
+"Objects of a superclass should be replaceable with objects of its subclasses without affecting the correctness of the program."
+
+In simpler terms, a subclass should behave like its parent class, so that wherever the parent class is used, the subclass can be substituted seamlessly without breaking functionality.
+
+Key Concepts:
+Behavioral Compatibility:
+
+A subclass should not override or modify methods in a way that violates the expectations set by the parent class.
+The subclass must adhere to the same "contract" as the parent.
+Preconditions and Postconditions:
+
+Preconditions (requirements before a method runs) should not be strengthened in the subclass.
+Postconditions (guarantees after a method runs) should not be weakened in the subclass.
+No Surprises:
+
+A subclass should not introduce unexpected behaviors that its parent class does not have.
+Violating LSP:
+A common violation occurs when a subclass changes or restricts the behavior of the parent class inappropriately.
+
+Example of Violation:
+Imagine a parent class Bird and a subclass Penguin.
+
+java
+Copy code
+public class Bird {
+    public void fly() {
+        System.out.println("I am flying!");
+    }
+}
+
+public class Penguin extends Bird {
+    @Override
+    public void fly() {
+        throw new UnsupportedOperationException("Penguins can't fly!");
+    }
+}
+
+Adhering to LSP:
+To adhere to LSP, redesign the hierarchy to avoid such conflicts.
+
+Correct Design:
+Instead of assuming all birds can fly, introduce an abstraction for flying behavior:
+
+java
+Copy code
+public abstract class Bird {
+    public abstract void move();
+}
+
+public class FlyingBird extends Bird {
+    public void move() {
+        System.out.println("I am flying!");
+    }
+}
+
+public class Penguin extends Bird {
+    public void move() {
+        System.out.println("I am swimming!");
+    }
+}
+FlyingBird and Penguin both conform to the Bird contract but implement their specific move() behavior.
+Code using Bird won't assume all birds can fly, avoiding violations of LSP.
+
+LSP in Practice:
+Avoid Overriding with Restrictive Behavior:
+
+Do not override a method to throw exceptions or impose stricter conditions unless the parent explicitly allows it.
+Prefer Composition over Inheritance:
+
+Use composition (e.g., Strategy Pattern) when a subclass would violate the parent’s behavior.
+Design with Interfaces or Abstract Classes:
+
+Clearly define behaviors or contracts that subclasses must follow.
+
+

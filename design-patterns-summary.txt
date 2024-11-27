@@ -1,0 +1,6 @@
+Design Pattern #1 - Strategy Pattern - The strategy pattern defines a family of algorithms, encapsulates each one, and makes them interchangeable. Strategy lets the algorithm vary independently from clients that use it.
+- Start with:
+  -an interface that defines the behavior method (no implementation)
+  -a subclass that implements the behavior specifically
+  -an abstract class that references the interface as a variable, and performAction methods to call the method in the interface
+  -a subclass that extends the abstract class and can dynamically set the performAction to the specific behavior.
