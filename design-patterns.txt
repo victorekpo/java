@@ -33,7 +33,7 @@ Technical Summary
 -All patterns provide a way to let some part of a system vary independently of all other parts.
 -Current solution for Duck class problem is to pull out Duck behaviors into their own subclasses, that still extend the Duck class. Benefit is that these subclasses have specific behaviors and are also implemented to get the benefit of code re-use.
 -"Program to an interface" really means "program to a supertype"
- -This is because the word "interface" hear can be overloaded, rather than meaning the literal Java interface, it means to a supertype like an interface or an abstract class.
+ -This is because the word "interface" here can be overloaded, rather than meaning the literal Java interface, it means to a supertype like an interface or an abstract class.
 -Programming to an implementation =
   Dog d = new Dog();
   d.bark();
