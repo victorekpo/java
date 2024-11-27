@@ -1,0 +1,133 @@
+Head First - Design Patterns - Eric & Elisabeth Freeman
+
+Chapters
+1. Welcome to Design Patterns - Introduction
+2. Keeping Your Objects in the Know - Observer Pattern
+3. Decorating Objects - Decorator Pattern
+4. Baking with OO Goodness - Factory Pattern
+5. One of a Kind Objects - Singleton Pattern
+6. Encapsulating Invocation - Command Pattern
+7. Being Adaptive - Adapter and Facade Patterns
+8. Encapsulating Algorithms - Template Method Pattern
+9. Well-managed Collections - Iterator and Composite Patterns
+10. State of Things - State Pattern
+11. Controlling Object Access - Proxy Pattern
+12. Patterns of Patterns - Compound Patterns
+13. Patterns in the Real World - Better Living with Patterns
+14. Appendix - Leftover Patterns
+
+Chapter 1 - Welcome to Design Patterns
+-The best way to use patterns is to learn the different patterns (especially the top ones) and "recognize places in your designs and existing applications where you can apply them."
+-Instead of code reuse, with patterns, you get experience reuse.
+-The one constant in software development is CHANGE.
+
+Technical Summary
+-We have a SimU Duck Program
+-Start with a Duck main class and subclasses (MallardDuck, RedHeadDuck, RubberDuck, DecoyDuck)
+-Problem is if we use inheritance, not all ducks do quack or fly
+-If we use interfaces like Flyable and Quackable, it creates a different maintenance problem because now we have to do more implementations also.
+-Also interfaces don't allow for code re-use since they require implementation
+-To solve this problem we need to use the following Design Principle:
+ * Identify the aspects of your application that vary and separate them from what stays the same. *
+  - In other words, if you've got some aspect of your code that is changing, say with every new requirement, then you know you've got a behavior that needs to be pulled out and separated from all the stuff that doesn't change.
+-All patterns provide a way to let some part of a system vary independently of all other parts.
+-Current solution for Duck class problem is to pull out Duck behaviors into their own subclasses, that still extend the Duck class. Benefit is that these subclasses have specific behaviors and are also implemented to get the benefit of code re-use.
+-"Program to an interface" really means "program to a supertype"
+ -This is because the word "interface" hear can be overloaded, rather than meaning the literal Java interface, it means to a supertype like an interface or an abstract class.
+-Programming to an implementation =
+  Dog d = new Dog();
+  d.bark();
+-Programming to an interface / supertype = 
+ Animal animal = new Dog(); // we can take advantage of polymorphism here by not caring about the type of animal, here we know its a Dog
+ animal.makeSound(); // every animal knows how to respond to makeSound
+-Even better we can assign the concrete implementation object at runtime = 
+  a = getAnimal(); // here we don't know what the animal will end up being but we know it can respond to makeSound
+  a.makeSound();
+Reference: page 12
+-We can make it an abstract supertype such as:
+  Animal { makeSound() } // abstract class
+  Dog { makeSound() { bark(); } } // Dog class implements abstract Animal class and implements its own makeSound
+  Cat .. same as above
+-Or we can make it more extendable by using interfaces (this way other objects not related to Animal or Duck class can implement the fly and quack behaviors)
+ FlyBehavior { fly(); } // interface
+ FlyWithWings { fly() // implements flying with wings } // implements interface
+ FlyNoWay { fly() // do nothing, can't fly } // implements interface
+..same with QuackBehavior interface, Quack, Squeak, MuteQuack classes
+-With this design, other types of objects can reuse our fly and quack behaviors because these behaviors are no longer hidden away in the Duck superclass.
+-Also new behaviors can be added later without modifying any existing behavior classes or touching any of the Duck classes that use flying behaviors. 
+// Begin ChatGPT
+-The "Program to an interface" design principle in object-oriented programming encourages you to depend on abstractions (interfaces) rather than concrete implementations. This makes your code more flexible, modular, and easier to extend.
+
+Interface
+public interface PaymentMethod {
+    void pay(double amount);
+}
+
+Concrete Implementations
+public class CreditCardPayment implements PaymentMethod {
+    private String cardNumber;
+
+    public CreditCardPayment(String cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+
+    @Override
+    public void pay(double amount) {
+        System.out.println("Paid " + amount + " using Credit Card: " + cardNumber);
+    }
+}
+
+public class PayPalPayment implements PaymentMethod {
+    private String email;
+
+    public PayPalPayment(String email) {
+        this.email = email;
+    }
+
+    @Override
+    public void pay(double amount) {
+        System.out.println("Paid " + amount + " using PayPal: " + email);
+    }
+}
+
+PaymentProcessor Class
+public class PaymentProcessor {
+    private PaymentMethod paymentMethod;
+
+    public PaymentProcessor(PaymentMethod paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public void processPayment(double amount) {
+        paymentMethod.pay(amount);
+    }
+
+    public static void main(String[] args) {
+        PaymentMethod creditCard = new CreditCardPayment("1234-5678-9876-5432");
+        PaymentProcessor creditCardProcessor = new PaymentProcessor(creditCard);
+        creditCardProcessor.processPayment(100.0);
+
+        PaymentMethod payPal = new PayPalPayment("user@example.com");
+        PaymentProcessor payPalProcessor = new PaymentProcessor(payPal);
+        payPalProcessor.processPayment(200.0);
+    }
+}
+
+Explanation
+Interface (PaymentMethod): This defines a pay method that any payment method should implement.
+Concrete Implementations:
+CreditCardPayment: Implements the pay method to process payments using a credit card.
+PayPalPayment: Implements the pay method to process payments using PayPal.
+PaymentProcessor: This class depends on the PaymentMethod interface. It does not care about the specific implementation of the payment method. It just calls the pay method of the PaymentMethod interface.
+Usage
+When you run the main method in PaymentProcessor, it will create instances of CreditCardPayment and PayPalPayment and process payments using those instances. The PaymentProcessor class only interacts with the PaymentMethod interface, demonstrating the "Program to an interface" design principle.
+
+This approach allows you to easily add new payment methods in the future without modifying the PaymentProcessor class. You can create a new class implementing the PaymentMethod interface, and it will work seamlessly with the existing PaymentProcessor.
+// End ChatGPT
+
+Questions and Answers So Far
+Q: Do I always have to implement my application first, see where things are changing, and then go back and separate & encapsulate those things?
+A: Not always; often when you are designing an application, you anticipate those areas that are going to vary and then go ahead and build the flexibility to deal with it into your code. You'll find that the principles and patterns can be applied at any stage of the development lifecycle.
+
+Q: Should we make Duck an interface too?
+A: Not in this case As you'll see once we've got everything hooked together, we do benefit by having Duck not be an interface and having specific ducks, like MallardDuck, inherit common properties and methods. Now that we've removed what varies from the Duck interface, we get the benefits of this structure without the problems. (There's no benefit to making Duck an interface since the other properties are shared, no need to implement them individually, and the behaviors are already interfaces, which is the thing that varies among Ducks). Note: display() is an abstract method within duck which forces implementation on all subclasses, this is okay since all duck subclasses will look different. However, the behaviors can be shared.
