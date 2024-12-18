@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,6 +30,9 @@ public class JmsService {
 
     @Autowired
     private RetryTemplate retryTemplate;
+
+    @Autowired
+    private ExecutorService executorService;
 
     private final ConcurrentLinkedQueue<InternalQueueMessage> internalQueue = new ConcurrentLinkedQueue<>();
 
@@ -46,23 +51,36 @@ public class JmsService {
         internalQueue.add(internalQueueMessage);
         System.out.println("Internal queue : " + getReceivedMessages());
 
+        processMessageWithRetry(message, internalQueueMessage);
+    }
+
+    private void processMessageWithRetry(String message, InternalQueueMessage internalQueueMessage) {
         try {
-            retryTemplate.execute(context -> {
-                internalQueueMessage.setStatus(InternalQueueMessage.Status.PROCESSING);
-                processMessage(message);
-                return null;
-            });
+            processMessage(message);
             internalQueueMessage.setStatus(InternalQueueMessage.Status.SUCCESS);
         } catch (Exception e) {
-            System.out.println("Retry attempts exhausted. Sending message to DLQ: " + message + " errorMessage: " + e.getMessage() + " errorCause: " + e.getCause());
-            sendToDlq(message);
-            internalQueueMessage.setStatus(InternalQueueMessage.Status.FAILURE);
+            executorService.submit(() -> {
+                retryTemplate.execute(context -> {
+                    internalQueueMessage.setStatus(InternalQueueMessage.Status.PROCESSING);
+                    CompletableFuture.runAsync(() -> processMessage(message))
+                            .exceptionally(ex -> {
+                                throw new RuntimeException(ex);
+                            }).join();
+                    return null;
+                });
+            });
         }
     }
 
     public void processMessage(String message) {
         String threadName = Thread.currentThread().getName();
         System.out.println("Received message from " + queueName + ": " + message + " on thread: " + threadName);
+        try {
+            Thread.sleep(5000); // Simulate delay of 5 seconds
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new RuntimeException("Thread was interrupted", e);
+        }
         throw new RuntimeException("exception thrown test");
     }
 
