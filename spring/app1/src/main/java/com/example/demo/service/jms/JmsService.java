@@ -81,7 +81,7 @@ public class JmsService {
                 });
             }, executorService).exceptionally(ex -> {
                 // Handle the exception from the async task
-                logger.warn("Retry attempts exhausted. Sending message to DLQ: {} errorMessage: {} stack:{}", message, ex.getMessage(), ex.getStackTrace());
+                logger.error("Retry attempts exhausted. Sending message to DLQ: {} errorMessage: {}", message, ex.getMessage());
                 internalQueueMessage.setStatus(InternalQueueMessage.Status.FAILURE);
                 sendToDlq(message);
                 return null;

@@ -1,20 +1,46 @@
 package com.example.demo.config.retry;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
 
+import jakarta.annotation.PreDestroy;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 @Configuration
 @EnableAsync
 public class AppConfig {
 
+    private static final Logger logger = LoggerFactory.getLogger(AppConfig.class);
+
+    private final ExecutorService executorService;
+
+    public AppConfig() {
+        this.executorService = Executors.newCachedThreadPool();
+    }
 
     @Bean
     public ExecutorService executorService() {
-        return Executors.newCachedThreadPool();
+        return executorService;
     }
 
+    @PreDestroy
+    public void shutdownExecutorService() {
+        executorService.shutdown();
+        try {
+            if (!executorService.awaitTermination(60, TimeUnit.SECONDS)) {
+                executorService.shutdownNow();
+                if (!executorService.awaitTermination(60, TimeUnit.SECONDS)) {
+                    logger.error("ExecutorService did not terminate");
+                }
+            }
+        } catch (InterruptedException ie) {
+            executorService.shutdownNow();
+            Thread.currentThread().interrupt();
+        }
+    }
 }
