@@ -19,6 +19,9 @@ public class JmsService {
     @Value("${jms.sqs.queue.name}")
     private String queueName;
 
+    @Value("${jms.sqs.dlq.name}")
+    private String dlqName;
+
     @Autowired
     private JmsTemplate jmsTemplate;
 
@@ -31,12 +34,21 @@ public class JmsService {
         jmsTemplate.convertAndSend(queueName, message);
     }
 
+    public void sendToDlq(String message) {
+        jmsTemplate.convertAndSend(dlqName, message);
+    }
+
     @JmsListener(destination = "${jms.sqs.queue.name}")
     public void receiveMessage(String message, Session session) throws JMSException {
-        retryTemplate.execute(context -> {
-            processMessage(message);
-            return null;
-        });
+        try {
+            retryTemplate.execute(context -> {
+                processMessage(message);
+                return null;
+            });
+        } catch (Exception e) {
+            System.out.println("Retry attempts exhausted. Sending message to DLQ: " + message + " errorMessage: " + e.getMessage() + " errorCause: " + e.getCause());
+            sendToDlq(message);
+        }
     }
 
     public void processMessage(String message) {
