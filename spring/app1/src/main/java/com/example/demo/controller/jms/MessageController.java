@@ -1,5 +1,6 @@
 package com.example.demo.controller.jms;
 
+import com.example.demo.service.jms.InternalQueueMessage;
 import com.example.demo.service.jms.JmsService;
 import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,8 +26,8 @@ public class MessageController {
 
    // @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/messages")
-    public List<String> viewMessages() {
-        List<String> messages = jmsService.getReceivedMessages();
+    public List<InternalQueueMessage> viewMessages() {
+        List<InternalQueueMessage> messages = jmsService.getReceivedMessages();
         System.out.println("Messages received " + messages.toString());
         return messages;
     }

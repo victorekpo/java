@@ -10,6 +10,7 @@ import org.springframework.retry.support.RetryTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.stream.Collectors;
 
@@ -28,7 +29,7 @@ public class JmsService {
     @Autowired
     private RetryTemplate retryTemplate;
 
-    private ConcurrentLinkedQueue<String> internalQueue = new ConcurrentLinkedQueue<>();
+    private final ConcurrentLinkedQueue<InternalQueueMessage> internalQueue = new ConcurrentLinkedQueue<>();
 
     public void sendMessage(String message) {
         jmsTemplate.convertAndSend(queueName, message);
@@ -40,14 +41,22 @@ public class JmsService {
 
     @JmsListener(destination = "${jms.sqs.queue.name}")
     public void receiveMessage(String message, Session session) throws JMSException {
+        String messageId = UUID.randomUUID().toString();
+        InternalQueueMessage internalQueueMessage = new InternalQueueMessage(messageId, message, Thread.currentThread().getName(), InternalQueueMessage.Status.PENDING);
+        internalQueue.add(internalQueueMessage);
+        System.out.println("Internal queue : " + getReceivedMessages());
+
         try {
             retryTemplate.execute(context -> {
+                internalQueueMessage.setStatus(InternalQueueMessage.Status.PROCESSING);
                 processMessage(message);
                 return null;
             });
+            internalQueueMessage.setStatus(InternalQueueMessage.Status.SUCCESS);
         } catch (Exception e) {
             System.out.println("Retry attempts exhausted. Sending message to DLQ: " + message + " errorMessage: " + e.getMessage() + " errorCause: " + e.getCause());
             sendToDlq(message);
+            internalQueueMessage.setStatus(InternalQueueMessage.Status.FAILURE);
         }
     }
 
@@ -57,7 +66,14 @@ public class JmsService {
         throw new RuntimeException("exception thrown test");
     }
 
-    public List<String> getReceivedMessages() {
+    public List<InternalQueueMessage> getReceivedMessages() {
         return internalQueue.stream().collect(Collectors.toList());
+    }
+
+    public InternalQueueMessage getMessageById(String id) {
+        return internalQueue.stream()
+                .filter(message -> message.getId().equals(id))
+                .findFirst()
+                .orElse(null);
     }
 }
