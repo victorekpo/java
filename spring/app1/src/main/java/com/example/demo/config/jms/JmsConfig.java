@@ -3,6 +3,7 @@ package com.example.demo.config.jms;
 import com.amazon.sqs.javamessaging.ProviderConfiguration;
 import com.amazon.sqs.javamessaging.SQSConnectionFactory;
 import jakarta.jms.ConnectionFactory;
+import jakarta.jms.Session;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.annotation.EnableJms;
@@ -64,14 +65,17 @@ public class JmsConfig {
     @Bean
     public DefaultJmsListenerContainerFactory jmsListenerContainerFactory(ConnectionFactory connectionFactory) {
         DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
+//        factory.setSessionAcknowledgeMode(Session.CLIENT_ACKNOWLEDGE);
         factory.setConnectionFactory(connectionFactory);
-        factory.setMessageConverter(messageConverter());
-        factory.setErrorHandler(t -> {
-            System.err.println("An error has occurred in the transaction: " + t.getMessage());
-            // Send the message to the DLQ
-            jmsTemplate(connectionFactory).convertAndSend("my-queue-dlq", t.getMessage());
-        });
+//        factory.setMessageConverter(messageConverter());
+        factory.setErrorHandler(errorHandler());
+        factory.setConcurrency("1-2"); // Set concurrency range
         return factory;
+    }
+
+    @Bean
+    public JmsErrorHandler errorHandler () {
+        return new JmsErrorHandler();
     }
 
     @Bean
