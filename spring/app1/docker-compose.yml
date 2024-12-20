@@ -9,8 +9,7 @@ services:
       - SKIP_SSL_CERT_DOWNLOAD=1
       - DEBUG=1
     volumes:
-      - "./localstack-init:/docker-entrypoint-initaws.d/localstack-init"
-    command: [ "/bin/bash", "-c", "/docker-entrypoint-initaws.d/localstack" ]
+      - "./init-aws.sh:/etc/localstack/init/ready.d/init-aws.sh"
 
   opensearch:
     image: opensearchproject/opensearch:latest
