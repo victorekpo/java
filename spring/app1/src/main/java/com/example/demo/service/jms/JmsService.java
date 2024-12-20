@@ -66,23 +66,3 @@ public class JmsService {
                 .orElse(null);
     }
 }
-
-// The processMessageWithRetry method is designed to process a message and handle any exceptions that occur during processing. If an exception occurs, it retries the message processing asynchronously using a RetryTemplate and an ExecutorService. Here is a detailed breakdown of the code:
-// Initial Message Processing:
-// The method processMessageWithRetry is called with a message and an InternalQueueMessage object.
-// It first attempts to process the message by calling processMessage(message).
-// If the message is processed successfully, it sets the status of internalQueueMessage to SUCCESS.
-// Exception Handling:
-// If an exception occurs during the initial processing, it logs the error message.
-// It then uses CompletableFuture.runAsync to retry the message processing asynchronously.
-// Asynchronous Retry:
-// CompletableFuture.runAsync takes two arguments:
-// A Runnable task that contains the retry logic.
-// An ExecutorService to manage the asynchronous execution of the task.
-// The retryTemplate.execute method is used to retry the message processing.
-// It sets the status of internalQueueMessage to PROCESSING.
-// It logs the retry attempt and calls processMessage(message) again.
-// If an exception occurs during the retry, it logs the error and throws a RuntimeException.
-// Handling Retry Exhaustion:
-// The exceptionally method of CompletableFuture is used to handle any exceptions that occur during the asynchronous task.
-// If all retry attempts are exhausted, it logs the error message, sets the status of internalQueueMessage to FAILURE, and sends the message to the Dead Letter Queue (DLQ) using sendToDlq(message).
