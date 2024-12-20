@@ -1,6 +1,5 @@
 package com.example.demo.service.jms;
 
-import jakarta.jms.JMSException;
 import jakarta.jms.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,15 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
-import org.springframework.retry.support.RetryTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.ExecutorService;
 
 @Service
 public class JmsService {
@@ -25,17 +21,8 @@ public class JmsService {
     @Value("${jms.sqs.queue.name}")
     private String queueName;
 
-    @Value("${jms.sqs.dlq.name}")
-    private String dlqName;
-
     @Autowired
     private JmsTemplate jmsTemplate;
-
-    @Autowired
-    private RetryTemplate retryTemplate;
-
-    @Autowired
-    private ExecutorService executorService;
 
     private final ConcurrentLinkedQueue<InternalQueueMessage> internalQueue = new ConcurrentLinkedQueue<>();
 
@@ -43,12 +30,8 @@ public class JmsService {
         jmsTemplate.convertAndSend(queueName, message);
     }
 
-    public void sendToDlq(String message) {
-        jmsTemplate.convertAndSend(dlqName, message);
-    }
-
     @JmsListener(destination = "${jms.sqs.queue.name}")
-    public void receiveMessage(String message, Session session) throws JMSException {
+    public void receiveMessage(String message, Session session) throws InterruptedException {
         String threadName = Thread.currentThread().getName();
         logger.info("Received message from {}: {} on thread: {}", queueName, message, threadName);
 
@@ -57,57 +40,18 @@ public class JmsService {
         internalQueue.add(internalQueueMessage);
         // System.out.println("Internal queue : " + getReceivedMessages());
 
-        processMessageWithRetry(message, internalQueueMessage);
-    }
-
-    private void processMessageWithRetry(String message, InternalQueueMessage internalQueueMessage) {
         try {
-            // Attempt to process the message
             processMessage(message);
-            // Set status to SUCCESS if processing is successful
-            internalQueueMessage.setStatus(InternalQueueMessage.Status.SUCCESS);
         } catch (Exception e) {
-            // Log the exception if initial processing fails
-            logger.error("Exception occurred while processing the first time: {}", e.getMessage());
-
-            // Retry processing asynchronously using CompletableFuture
-            CompletableFuture.runAsync(() -> {
-                // Use RetryTemplate to retry the message processing
-                retryTemplate.execute(context -> {
-                    // Set status to PROCESSING during retry attempts
-                    internalQueueMessage.setStatus(InternalQueueMessage.Status.PROCESSING);
-                    try {
-                        // Log the retry attempt with the current thread name
-                        String threadName = Thread.currentThread().getName();
-                        logger.info("Retrying message: {} on thread: {}", message, threadName);
-                        // Attempt to process the message again
-                        processMessage(message);
-                    } catch (Exception ex) {
-                        // Log the exception if retry fails and throw a RuntimeException
-                        logger.error("Exception occurred while retrying: {}", ex.getMessage());
-                        throw new RuntimeException(ex);
-                    }
-                    return null;
-                });
-            }, executorService).exceptionally(ex -> {
-                // Handle the exception if all retry attempts are exhausted
-                logger.error("Retry attempts exhausted. Sending message to DLQ: {} errorMessage: {}", message, ex.getMessage());
-                // Set status to FAILURE and send the message to DLQ
-                internalQueueMessage.setStatus(InternalQueueMessage.Status.FAILURE);
-                sendToDlq(message);
-                return null;
-            });
+            logger.error("Error processing message: {}", e.getMessage());
+            throw e;
         }
     }
 
-    public void processMessage(String message) {
-        try {
-            logger.info("Processing message: {}", message);
-            Thread.sleep(10000); // Simulate delay of 5 seconds
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            throw new RuntimeException("Thread was interrupted", e);
-        }
+    public void processMessage(String message) throws InterruptedException {
+        logger.info("Processing message: {}", message);
+        Thread.sleep(10000); // Simulate delay of 5 seconds
+
         throw new RuntimeException("exception thrown test");
     }
 

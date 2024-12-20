@@ -1,0 +1,35 @@
+services:
+  localstack:
+    image: localstack/localstack:latest
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=sqs
+      - DEFAULT_REGION=us-east-1
+      - SKIP_SSL_CERT_DOWNLOAD=1
+      - DEBUG=1
+    volumes:
+      - "./localstack-init:/docker-entrypoint-initaws.d/localstack-init"
+    command: [ "/bin/bash", "-c", "/docker-entrypoint-initaws.d/localstack" ]
+
+  opensearch:
+    image: opensearchproject/opensearch:latest
+    environment:
+      - discovery.type=single-node
+      - OPENSEARCH_INITIAL_ADMIN_PASSWORD=1A!2@b3%c4d5e6f7g8h9i0j
+      - DISABLE_SECURITY_PLUGIN=true
+    ports:
+      - "9200:9200"
+      - "9600:9600"
+
+#  activemq:
+#    image: 'apache/activemq-classic:latest'
+#    ports:
+#      - '61616'
+#  rabbitmq:
+#    image: 'rabbitmq:latest'
+#    environment:
+#      - 'RABBITMQ_DEFAULT_PASS=secret'
+#      - 'RABBITMQ_DEFAULT_USER=myuser'
+#    ports:
+#      - '5672'

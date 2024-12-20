@@ -29,7 +29,7 @@ public class JmsConfig {
     @Bean
     public SqsClient sqsClient() {
         return SqsClient.builder()
-                .endpointOverride(URI.create("http://localhost:9324"))
+                .endpointOverride(URI.create("http://localhost:4566"))
                 .region(Region.US_EAST_1)
                 .credentialsProvider(DefaultCredentialsProvider.create())
                 .build();
@@ -65,7 +65,7 @@ public class JmsConfig {
     @Bean
     public DefaultJmsListenerContainerFactory jmsListenerContainerFactory(ConnectionFactory connectionFactory) {
         DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
-//        factory.setSessionAcknowledgeMode(Session.CLIENT_ACKNOWLEDGE);
+        factory.setSessionAcknowledgeMode(Session.CLIENT_ACKNOWLEDGE);
         factory.setConnectionFactory(connectionFactory);
 //        factory.setMessageConverter(messageConverter());
         factory.setErrorHandler(errorHandler());
@@ -74,7 +74,7 @@ public class JmsConfig {
     }
 
     @Bean
-    public JmsErrorHandler errorHandler () {
+    public JmsErrorHandler errorHandler() {
         return new JmsErrorHandler();
     }
 
