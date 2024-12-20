@@ -14,3 +14,4 @@ awslocal sqs set-queue-attributes \
 
 aws --endpoint-url=http://localhost:4566 sqs get-queue-attributes --queue-url http://localhost:4566/000000000000/my-queue --attribute-names All
 # aws --endpoint-url=http://localhost:4566 sqs get-queue-attributes --queue-url http://localhost:4566/000000000000/my-queue --attribute-names RedrivePolicy
+# http://localhost:4566/000000000000/my-queue?Action=SendMessage&MessageBody=Hello%20World

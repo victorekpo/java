@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.listener.DefaultMessageListenerContainer;
 import org.springframework.jms.support.converter.MappingJackson2MessageConverter;
 import org.springframework.jms.support.converter.MessageConverter;
 import org.springframework.jms.support.converter.MessageType;
@@ -64,7 +65,7 @@ public class JmsConfig {
 
     @Bean
     public DefaultJmsListenerContainerFactory jmsListenerContainerFactory(ConnectionFactory connectionFactory) {
-        DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
+        DefaultJmsListenerContainerFactory factory = new CustomJmsListenerContainerFactory();
         factory.setSessionAcknowledgeMode(Session.CLIENT_ACKNOWLEDGE);
         factory.setConnectionFactory(connectionFactory);
 //        factory.setMessageConverter(messageConverter());
@@ -84,6 +85,27 @@ public class JmsConfig {
         converter.setTargetType(MessageType.TEXT);
         converter.setTypeIdPropertyName("_type");
         return converter;
+    }
+
+    public static class CustomMessageListenerContainer extends DefaultMessageListenerContainer {
+
+        public CustomMessageListenerContainer() {
+            super();
+        }
+
+        @Override
+        protected void rollbackOnExceptionIfNecessary(Session session, Throwable ex) {
+            // do nothing, so that "visibilityTimeout" will stay same
+        }
+
+    }
+
+    public static class CustomJmsListenerContainerFactory extends DefaultJmsListenerContainerFactory {
+
+        @Override
+        protected DefaultMessageListenerContainer createContainerInstance() {
+            return new CustomMessageListenerContainer();
+        }
     }
 }
 

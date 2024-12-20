@@ -11,7 +11,7 @@ public class JmsErrorHandler implements ErrorHandler {
     @Override
     public void handleError(Throwable t) {
         // Log the error details
-        logger.error("Error in JMS processing: {}", t.getMessage(), t);
+        logger.error("Error in JMS processing, placing message back in the queue; error: {}", t.getMessage(), t);
         // Add additional error handling logic here if needed (e.g., notifying monitoring systems)
     }
 }
