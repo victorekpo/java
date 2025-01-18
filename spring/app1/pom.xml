@@ -1,347 +1,354 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.4.0</version>
-	</parent>
-	<groupId>com.example</groupId>
-	<artifactId>demo</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>demo</name>
-	<description>Demo project for Spring Boot</description>
-	<properties>
-		<java.version>23</java.version>
-		<aws.sqs.version>2.1.4</aws.sqs.version>
-		<aws.sdk.version>2.29.24</aws.sdk.version>
-		<spring.jms.version>6.1.14</spring.jms.version>
-		<opensearch.version>2.18.0</opensearch.version>
-		<mysql-connector.version>8.0.33</mysql-connector.version>
-		<kafka.version>3.9.0</kafka.version>
-		<liquibase.version>4.30.0</liquibase.version>
-		<micrometer.version>1.14.1</micrometer.version>
-		<lombok.version>1.18.34</lombok.version>
-		<testcontainers.version>1.20.4</testcontainers.version>
-		<springdoc.version>2.6.0</springdoc.version>
-		<reactor.version>3.5.0</reactor.version>
-		<h2.version>2.2.220</h2.version>
-		<spring-cloud.version>2022.0.3</spring-cloud.version>
-	</properties>
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>${spring-cloud.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
-	<dependencies>
-		<dependency>
-			<groupId>org.springframework.retry</groupId>
-			<artifactId>spring-retry</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-aop</artifactId>
-		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>software.amazon.awssdk</groupId>-->
-<!--			<artifactId>sqs</artifactId>-->
-<!--			<version>${aws.sdk.version}</version> &lt;!&ndash; Use the latest AWS SDK version &ndash;&gt;-->
-<!--		</dependency>-->
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.4.0</version>
+    </parent>
+    <groupId>com.example</groupId>
+    <artifactId>demo</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>demo</name>
+    <description>Demo project for Spring Boot</description>
+    <properties>
+        <java.version>23</java.version>
+        <aws.sqs.version>2.1.4</aws.sqs.version>
+        <aws.sdk.version>2.29.24</aws.sdk.version>
+        <spring.jms.version>6.1.14</spring.jms.version>
+        <opensearch.version>2.18.0</opensearch.version>
+        <mysql-connector.version>8.0.33</mysql-connector.version>
+        <kafka.version>3.9.0</kafka.version>
+        <liquibase.version>4.30.0</liquibase.version>
+        <micrometer.version>1.14.1</micrometer.version>
+        <lombok.version>1.18.34</lombok.version>
+        <testcontainers.version>1.20.4</testcontainers.version>
+        <springdoc.version>2.6.0</springdoc.version>
+        <reactor.version>3.5.0</reactor.version>
+        <h2.version>2.2.220</h2.version>
+        <spring-cloud.version>2022.0.3</spring-cloud.version>
+    </properties>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.retry</groupId>
+            <artifactId>spring-retry</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+        <!--		<dependency>-->
+        <!--			<groupId>software.amazon.awssdk</groupId>-->
+        <!--			<artifactId>sqs</artifactId>-->
+        <!--			<version>${aws.sdk.version}</version> &lt;!&ndash; Use the latest AWS SDK version &ndash;&gt;-->
+        <!--		</dependency>-->
 
-		<!-- Amazon SQS Java Messaging Library 2.1.3 (for compatibility with AWS SDK v2) -->
-		<dependency>
-			<groupId>com.amazonaws</groupId>
-			<artifactId>amazon-sqs-java-messaging-lib</artifactId>
-			<version>${aws.sqs.version}</version>
-			<scope>compile</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jms</artifactId>
-			<version>${spring.jms.version}</version>
-		</dependency>
-		<!-- Spring Boot Starters -->
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-starter-activemq</artifactId>-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-starter-actuator</artifactId>-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-starter-batch</artifactId>-->
-<!--		</dependency>-->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jdbc</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-starter-data-jpa</artifactId>-->
-<!--		</dependency>-->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-docker-compose</artifactId>
-			<scope>runtime</scope>
-			<optional>true</optional>
-		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-starter-test</artifactId>-->
-<!--			<scope>test</scope>-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-testcontainers</artifactId>-->
-<!--			<scope>test</scope>-->
-<!--		</dependency>-->
+        <!-- Amazon SQS Java Messaging Library 2.1.3 (for compatibility with AWS SDK v2) -->
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>amazon-sqs-java-messaging-lib</artifactId>
+            <version>${aws.sqs.version}</version>
+            <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jms</artifactId>
+            <version>${spring.jms.version}</version>
+        </dependency>
+        <!-- Spring Boot Starters -->
+        <!--		<dependency>-->
+        <!--			<groupId>org.springframework.boot</groupId>-->
+        <!--			<artifactId>spring-boot-starter-activemq</artifactId>-->
+        <!--		</dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <!--		<dependency>-->
+        <!--			<groupId>org.springframework.boot</groupId>-->
+        <!--			<artifactId>spring-boot-starter-batch</artifactId>-->
+        <!--		</dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jdbc</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!--		<dependency>-->
+        <!--			<groupId>org.springframework.boot</groupId>-->
+        <!--			<artifactId>spring-boot-starter-data-jpa</artifactId>-->
+        <!--		</dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-docker-compose</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
+        <!--		<dependency>-->
+        <!--			<groupId>org.springframework.boot</groupId>-->
+        <!--			<artifactId>spring-boot-starter-test</artifactId>-->
+        <!--			<scope>test</scope>-->
+        <!--		</dependency>-->
+        <!--		<dependency>-->
+        <!--			<groupId>org.springframework.boot</groupId>-->
+        <!--			<artifactId>spring-boot-testcontainers</artifactId>-->
+        <!--			<scope>test</scope>-->
+        <!--		</dependency>-->
 
-		<!-- Spring Messaging -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-messaging</artifactId>
-		</dependency>
+        <!-- Spring Messaging -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-messaging</artifactId>
+        </dependency>
 
-		<!-- Spring Cloud AWS Messaging -->
-<!--		<dependency>-->
-<!--			<groupId>io.awspring.cloud</groupId>-->
-<!--			<artifactId>spring-cloud-aws-messaging</artifactId>-->
-<!--			<version>${spring-cloud-aws-messaging.version}</version>-->
-<!--		</dependency>-->
-		<!-- Spring Cloud Gateway -->
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.cloud</groupId>-->
-<!--			<artifactId>spring-cloud-starter-gateway</artifactId>-->
-<!--		</dependency>-->
+        <!-- Spring Cloud AWS Messaging -->
+        <!--		<dependency>-->
+        <!--			<groupId>io.awspring.cloud</groupId>-->
+        <!--			<artifactId>spring-cloud-aws-messaging</artifactId>-->
+        <!--			<version>${spring-cloud-aws-messaging.version}</version>-->
+        <!--		</dependency>-->
+        <!-- Spring Cloud Gateway -->
+        <!--		<dependency>-->
+        <!--			<groupId>org.springframework.cloud</groupId>-->
+        <!--			<artifactId>spring-cloud-starter-gateway</artifactId>-->
+        <!--		</dependency>-->
 
-		<!-- Kafka Streams -->
-		<dependency>
-			<groupId>org.apache.kafka</groupId>
-			<artifactId>kafka-streams</artifactId>
-			<version>${kafka.version}</version>
-		</dependency>
+        <!-- Kafka Streams -->
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-streams</artifactId>
+            <version>${kafka.version}</version>
+        </dependency>
 
-		<!-- Liquibase Core -->
-		<dependency>
-			<groupId>org.liquibase</groupId>
-			<artifactId>liquibase-core</artifactId>
-			<version>${liquibase.version}</version>
-		</dependency>
+        <!-- Liquibase Core -->
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>${liquibase.version}</version>
+        </dependency>
 
-		<!-- Spring Kafka -->
-		<dependency>
-			<groupId>org.springframework.kafka</groupId>
-			<artifactId>spring-kafka</artifactId>
-		</dependency>
+        <!-- Spring Kafka -->
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
 
-		<!-- Spring Security Messaging -->
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.security</groupId>-->
-<!--			<artifactId>spring-security-messaging</artifactId>-->
-<!--		</dependency>-->
+        <!-- Spring Security Messaging -->
+        <!--		<dependency>-->
+        <!--			<groupId>org.springframework.security</groupId>-->
+        <!--			<artifactId>spring-security-messaging</artifactId>-->
+        <!--		</dependency>-->
 
-		<!-- Micrometer Registry for Dynatrace -->
-		<dependency>
-			<groupId>io.micrometer</groupId>
-			<artifactId>micrometer-registry-dynatrace</artifactId>
-			<version>${micrometer.version}</version>
-			<scope>runtime</scope>
-		</dependency>
+        <!-- Micrometer Registry for Dynatrace -->
+        <!--        <dependency>-->
+        <!--            <groupId>io.micrometer</groupId>-->
+        <!--            <artifactId>micrometer-registry-dynatrace</artifactId>-->
+        <!--            <version>${micrometer.version}</version>-->
+        <!--            <scope>runtime</scope>-->
+        <!--        </dependency>-->
 
-		<!-- Lombok for Boilerplate Code Reduction -->
-<!--		<dependency>-->
-<!--			<groupId>org.projectlombok</groupId>-->
-<!--			<artifactId>lombok</artifactId>-->
-<!--			<version>${lombok.version}</version>-->
-<!--			<optional>true</optional>-->
-<!--		</dependency>-->
+        <!-- Micrometer Registry for InfluxDB -->
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-influx</artifactId>
+            <version>${micrometer.version}</version>
+        </dependency>
 
-		<!-- H2 Database for Development and Testing -->
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<version>${h2.version}</version>
-			<scope>runtime</scope>
-		</dependency>
+        <!-- Lombok for Boilerplate Code Reduction -->
+        <!--		<dependency>-->
+        <!--			<groupId>org.projectlombok</groupId>-->
+        <!--			<artifactId>lombok</artifactId>-->
+        <!--			<version>${lombok.version}</version>-->
+        <!--			<optional>true</optional>-->
+        <!--		</dependency>-->
 
-		<!-- MySQL Connector for MySQL Database -->
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>${mysql-connector.version}</version>
-			<scope>runtime</scope>
-		</dependency>
+        <!-- H2 Database for Development and Testing -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${h2.version}</version>
+            <scope>runtime</scope>
+        </dependency>
 
-		<!-- Springdoc OpenAPI WebMVC Starter for API Documentation -->
-		<dependency>
-			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-			<version>${springdoc.version}</version>
-		</dependency>
+        <!-- MySQL Connector for MySQL Database -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql-connector.version}</version>
+            <scope>runtime</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>org.opensearch.client</groupId>
-			<artifactId>opensearch-java</artifactId>
-			<version>${opensearch.version}</version>
-		</dependency>
+        <!-- Springdoc OpenAPI WebMVC Starter for API Documentation -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${springdoc.version}</version>
+        </dependency>
 
-		<dependency>
-			<groupId>org.apache.httpcomponents.client5</groupId>
-			<artifactId>httpclient5</artifactId>
-			<version>5.4.1</version>
-		</dependency>
+        <dependency>
+            <groupId>org.opensearch.client</groupId>
+            <artifactId>opensearch-java</artifactId>
+            <version>${opensearch.version}</version>
+        </dependency>
 
-		<dependency>
-			<groupId>software.amazon.awssdk</groupId>
-			<artifactId>apache-client</artifactId>
-			<version>${aws.sdk.version}</version>
-		</dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents.client5</groupId>
+            <artifactId>httpclient5</artifactId>
+            <version>5.4.1</version>
+        </dependency>
 
-		<dependency>
-			<groupId>software.amazon.awssdk</groupId>
-			<artifactId>auth</artifactId>
-			<version>${aws.sdk.version}</version>
-		</dependency>
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>apache-client</artifactId>
+            <version>${aws.sdk.version}</version>
+        </dependency>
 
-		<dependency>
-			<groupId>software.amazon.awssdk</groupId>
-			<artifactId>opensearch</artifactId>
-			<version>${aws.sdk.version}</version>
-		</dependency>
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>auth</artifactId>
+            <version>${aws.sdk.version}</version>
+        </dependency>
 
-		<!-- Logging -->
-<!--		<dependency>-->
-<!--			<groupId>ch.qos.logback</groupId>-->
-<!--			<artifactId>logback-classic</artifactId>-->
-<!--			<version>1.5.12</version>-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>ch.qos.logback</groupId>-->
-<!--			<artifactId>logback-access</artifactId>-->
-<!--			<version>1.5.12</version>-->
-<!--		</dependency>-->
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>opensearch</artifactId>
+            <version>${aws.sdk.version}</version>
+        </dependency>
 
-<!--		<dependency>-->
-<!--			<groupId>org.slf4j</groupId>-->
-<!--			<artifactId>slf4j-api</artifactId>-->
-<!--			<version>2.0.9</version>-->
-<!--		</dependency>-->
+        <!-- Logging -->
+        <!--		<dependency>-->
+        <!--			<groupId>ch.qos.logback</groupId>-->
+        <!--			<artifactId>logback-classic</artifactId>-->
+        <!--			<version>1.5.12</version>-->
+        <!--		</dependency>-->
+        <!--		<dependency>-->
+        <!--			<groupId>ch.qos.logback</groupId>-->
+        <!--			<artifactId>logback-access</artifactId>-->
+        <!--			<version>1.5.12</version>-->
+        <!--		</dependency>-->
+
+        <!--		<dependency>-->
+        <!--			<groupId>org.slf4j</groupId>-->
+        <!--			<artifactId>slf4j-api</artifactId>-->
+        <!--			<version>2.0.9</version>-->
+        <!--		</dependency>-->
 
 
-<!--		&lt;!&ndash; Reactor Test for Reactive Streams Testing &ndash;&gt;-->
-<!--		<dependency>-->
-<!--			<groupId>io.projectreactor</groupId>-->
-<!--			<artifactId>reactor-test</artifactId>-->
-<!--			<version>${reactor.version}</version>-->
-<!--			<scope>test</scope>-->
-<!--		</dependency>-->
+        <!--		&lt;!&ndash; Reactor Test for Reactive Streams Testing &ndash;&gt;-->
+        <!--		<dependency>-->
+        <!--			<groupId>io.projectreactor</groupId>-->
+        <!--			<artifactId>reactor-test</artifactId>-->
+        <!--			<version>${reactor.version}</version>-->
+        <!--			<scope>test</scope>-->
+        <!--		</dependency>-->
 
-<!--		&lt;!&ndash; Spring Rabbit Test for RabbitMQ Testing &ndash;&gt;-->
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.amqp</groupId>-->
-<!--			<artifactId>spring-rabbit-test</artifactId>-->
-<!--		</dependency>-->
+        <!--		&lt;!&ndash; Spring Rabbit Test for RabbitMQ Testing &ndash;&gt;-->
+        <!--		<dependency>-->
+        <!--			<groupId>org.springframework.amqp</groupId>-->
+        <!--			<artifactId>spring-rabbit-test</artifactId>-->
+        <!--		</dependency>-->
 
-<!--		&lt;!&ndash; Spring Batch Test for Batch Processing Testing &ndash;&gt;-->
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.batch</groupId>-->
-<!--			<artifactId>spring-batch-test</artifactId>-->
-<!--		</dependency>-->
+        <!--		&lt;!&ndash; Spring Batch Test for Batch Processing Testing &ndash;&gt;-->
+        <!--		<dependency>-->
+        <!--			<groupId>org.springframework.batch</groupId>-->
+        <!--			<artifactId>spring-batch-test</artifactId>-->
+        <!--		</dependency>-->
 
-<!--		&lt;!&ndash; Spring Integration Test for Integration Testing &ndash;&gt;-->
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.integration</groupId>-->
-<!--			<artifactId>spring-integration-test</artifactId>-->
-<!--		</dependency>-->
+        <!--		&lt;!&ndash; Spring Integration Test for Integration Testing &ndash;&gt;-->
+        <!--		<dependency>-->
+        <!--			<groupId>org.springframework.integration</groupId>-->
+        <!--			<artifactId>spring-integration-test</artifactId>-->
+        <!--		</dependency>-->
 
-<!--		&lt;!&ndash; Spring Kafka Test for Kafka Testing &ndash;&gt;-->
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.kafka</groupId>-->
-<!--			<artifactId>spring-kafka-test</artifactId>-->
-<!--		</dependency>-->
+        <!--		&lt;!&ndash; Spring Kafka Test for Kafka Testing &ndash;&gt;-->
+        <!--		<dependency>-->
+        <!--			<groupId>org.springframework.kafka</groupId>-->
+        <!--			<artifactId>spring-kafka-test</artifactId>-->
+        <!--		</dependency>-->
 
-<!--		&lt;!&ndash; Spring Security Test for Security Testing &ndash;&gt;-->
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.security</groupId>-->
-<!--			<artifactId>spring-security-test</artifactId>-->
-<!--		</dependency>-->
+        <!--		&lt;!&ndash; Spring Security Test for Security Testing &ndash;&gt;-->
+        <!--		<dependency>-->
+        <!--			<groupId>org.springframework.security</groupId>-->
+        <!--			<artifactId>spring-security-test</artifactId>-->
+        <!--		</dependency>-->
 
-<!--		&lt;!&ndash; Testcontainers for Containerized Testing &ndash;&gt;-->
-<!--		<dependency>-->
-<!--			<groupId>org.testcontainers</groupId>-->
-<!--			<artifactId>junit-jupiter</artifactId>-->
-<!--			<version>${testcontainers.version}</version>-->
-<!--			<scope>test</scope>-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>org.testcontainers</groupId>-->
-<!--			<artifactId>kafka</artifactId>-->
-<!--			<version>${testcontainers.version}</version>-->
-<!--			<scope>test</scope>-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>org.testcontainers</groupId>-->
-<!--			<artifactId>rabbitmq</artifactId>-->
-<!--			<version>${testcontainers.version}</version>-->
-<!--			<scope>test</scope>-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>org.testcontainers</groupId>-->
-<!--			<artifactId>activemq</artifactId>-->
-<!--			<version>${testcontainers.version}</version>-->
-<!--			<scope>test</scope>-->
-<!--		</dependency>-->
-	</dependencies>
+        <!--		&lt;!&ndash; Testcontainers for Containerized Testing &ndash;&gt;-->
+        <!--		<dependency>-->
+        <!--			<groupId>org.testcontainers</groupId>-->
+        <!--			<artifactId>junit-jupiter</artifactId>-->
+        <!--			<version>${testcontainers.version}</version>-->
+        <!--			<scope>test</scope>-->
+        <!--		</dependency>-->
+        <!--		<dependency>-->
+        <!--			<groupId>org.testcontainers</groupId>-->
+        <!--			<artifactId>kafka</artifactId>-->
+        <!--			<version>${testcontainers.version}</version>-->
+        <!--			<scope>test</scope>-->
+        <!--		</dependency>-->
+        <!--		<dependency>-->
+        <!--			<groupId>org.testcontainers</groupId>-->
+        <!--			<artifactId>rabbitmq</artifactId>-->
+        <!--			<version>${testcontainers.version}</version>-->
+        <!--			<scope>test</scope>-->
+        <!--		</dependency>-->
+        <!--		<dependency>-->
+        <!--			<groupId>org.testcontainers</groupId>-->
+        <!--			<artifactId>activemq</artifactId>-->
+        <!--			<version>${testcontainers.version}</version>-->
+        <!--			<scope>test</scope>-->
+        <!--		</dependency>-->
+    </dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>
 
-<!-- When resolving Java dependencies, its important to check the ./mvnw dependency:tree -Dverbose
-to know what is not actually loading due to conflicts -->
+        <!-- When resolving Java dependencies, its important to check the ./mvnw dependency:tree -Dverbose
+        to know what is not actually loading due to conflicts -->
