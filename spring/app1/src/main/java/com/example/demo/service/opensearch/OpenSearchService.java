@@ -2,7 +2,7 @@ package com.example.demo.service.opensearch;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-// import com.fasterxml.jackson.databind.node.ObjectNode;
+import io.micrometer.core.instrument.Counter;
 import org.opensearch.client.opensearch.OpenSearchClient;
 import org.opensearch.client.opensearch.core.*;
 import org.opensearch.client.opensearch.indices.CreateIndexRequest;
@@ -22,12 +22,17 @@ public class OpenSearchService {
     @Autowired
     private OpenSearchClient openSearchClient;
 
+    @Autowired
+    private Counter openCounter;
+
     public void createIndex() throws IOException {
         CreateIndexRequest createIndexRequest = new CreateIndexRequest.Builder()
                 .index("my_index")
                 .build();
         CreateIndexResponse createIndexResponse = openSearchClient.indices().create(createIndexRequest);
         System.out.println("Index created: " + createIndexResponse.acknowledged());
+
+        openCounter.increment();
     }
 
     public void deleteIndex() throws IOException {
@@ -36,6 +41,8 @@ public class OpenSearchService {
                 .build();
         DeleteIndexResponse deleteIndexResponse = openSearchClient.indices().delete(deleteIndexRequest);
         System.out.println("Index deleted: " + deleteIndexResponse.acknowledged());
+
+        openCounter.increment();
     }
 
     public void createDocument() throws IOException {
@@ -46,6 +53,8 @@ public class OpenSearchService {
                 .build();
         CreateResponse createResponse = openSearchClient.create(createRequest);
         System.out.println("Document created: " + createResponse.result());
+
+        openCounter.increment();
     }
 
     public void addDocuments() throws IOException {
@@ -68,6 +77,8 @@ public class OpenSearchService {
 
         BulkResponse bulkResponse = openSearchClient.bulk(bulkRequestBuilder.build());
         System.out.println("Documents added: " + bulkResponse.items().size());
+
+        openCounter.increment();
     }
 
     public JsonNode getDocument(String id) throws IOException {
@@ -84,6 +95,9 @@ public class OpenSearchService {
         System.out.println("Document id: " + getResponse.id());
         System.out.println("Document version: " + getResponse.version());
         System.out.println("Document seqNo: " + getResponse.seqNo());
+
+        openCounter.increment();
+
         return getResponse.source();
     }
 
@@ -93,6 +107,9 @@ public class OpenSearchService {
                 .ids(ids)
                 .build();
         MgetResponse<JsonNode> mgetResponse = openSearchClient.mget(mgetRequest, JsonNode.class);
+
+        openCounter.increment();
+
         return mgetResponse.docs().stream()
                 .map(doc -> doc.result().source())
                 .collect(Collectors.toList());
@@ -113,6 +130,8 @@ public class OpenSearchService {
             ));
         }
         openSearchClient.bulk(bulkRequestBuilder.build());
+
+        openCounter.increment();
     }
 
     public void bulkCreateTechDocuments(List<Technology> technologies) throws IOException {
@@ -125,6 +144,8 @@ public class OpenSearchService {
             ));
         }
         openSearchClient.bulk(bulkRequestBuilder.build());
+
+        openCounter.increment();
     }
 
     public void bulkDeleteDocuments(List<String> ids) throws IOException {
@@ -136,6 +157,8 @@ public class OpenSearchService {
             ));
         }
         openSearchClient.bulk(bulkRequestBuilder.build());
+
+        openCounter.increment();
     }
 
     // string -> arbitrary object (unstructured)
@@ -154,6 +177,8 @@ public class OpenSearchService {
             ));
         }
         openSearchClient.bulk(bulkRequestBuilder.build());
+
+        openCounter.increment();
     }
 
     // specific objects -> specific objects (structured)
@@ -169,6 +194,8 @@ public class OpenSearchService {
             ));
         }
         openSearchClient.bulk(bulkRequestBuilder.build());
+
+        openCounter.increment();
     }
 
     // String -> specific objects (structured)
@@ -187,6 +214,8 @@ public class OpenSearchService {
             ));
         }
         openSearchClient.bulk(bulkRequestBuilder.build());
+
+        openCounter.increment();
     }
 
     public static class Technology {
@@ -198,7 +227,8 @@ public class OpenSearchService {
             this.description = description;
         }
 
-        public Technology() {}
+        public Technology() {
+        }
 
         public String getName() {
             return name;
